@@ -1,0 +1,875 @@
+name,graph_id
+Leukemia,journal_leukemia
+Mol Clin Oncol,journal_molclinoncol
+J. Cell. Biochem.,journal_j_cell_biochem_
+Genes Dev.,journal_genesdev_
+Cell,journal_cell
+Curr. Biol.,journal_curr_biol_
+Cancer Sci.,journal_cancersci_
+J. Biol. Chem.,journal_j_biol_chem_
+Sci Rep,journal_scirep
+Am. J. Pathol.,journal_am_j_pathol_
+Acta Pharmacol. Sin.,journal_actapharmacol_sin_
+Curr Hematol Malig Rep,journal_currhematolmaligrep
+Biomed. Pharmacother.,journal_biomed_pharmacother_
+J. Cell. Physiol.,journal_j_cell_physiol_
+Am. J. Surg. Pathol.,journal_am_j_surg_pathol_
+Int. J. Oncol.,journal_int_j_oncol_
+Biochim. Biophys. Acta,journal_biochim_biophys_acta
+Clin. Cancer Res.,journal_clin_cancerres_
+Diagn Pathol,journal_diagnpathol
+Br. J. Cancer,journal_br_j_cancer
+Biochem. Biophys. Res. Commun.,journal_biochem_biophys_res_commun_
+Asian Pac. J. Cancer Prev.,journal_asianpac_j_cancerprev_
+Xi Bao Yu Fen Zi Mian Yi Xue Za Zhi,journal_xibaoyufenzimianyixuezazhi
+BMC Cancer,journal_bmccancer
+Cancer Invest.,journal_cancerinvest_
+Biochim Biophys Acta Mol Cell Res,journal_biochimbiophysactamolcellres
+Curr. Med. Chem.,journal_curr_med_chem_
+Breast Cancer Res. Treat.,journal_breastcancerres_treat_
+Mol. Cell. Biol.,journal_mol_cell_biol_
+J. Clin. Invest.,journal_j_clin_invest_
+Placenta,journal_placenta
+Cell Death Dis,journal_celldeathdis
+J. Clin. Gastroenterol.,journal_j_clin_gastroenterol_
+Int. J. Cancer,journal_int_j_cancer
+Oncol. Rep.,journal_oncol_rep_
+Eur J Med Chem,journal_eurjmedchem
+Cancer Chemother. Pharmacol.,journal_cancerchemother_pharmacol_
+Int J Mol Sci,journal_intjmolsci
+Gene,journal_gene
+Gut Liver,journal_gutliver
+Brain Pathol.,journal_brainpathol_
+Cell Rep,journal_cellrep
+Oncotarget,journal_oncotarget
+Cancer Res.,journal_cancerres_
+Am J Transl Res,journal_amjtranslres
+Trends Immunol.,journal_trendsimmunol_
+Cancer Cell Int.,journal_cancercellint_
+Cancer Med,journal_cancermed
+Blood Adv,journal_bloodadv
+Genes Chromosomes Cancer,journal_geneschromosomescancer
+Oncogene,journal_oncogene
+Nat Commun,journal_natcommun
+J. Cell. Sci.,journal_j_cell_sci_
+Pediatr Blood Cancer,journal_pediatrbloodcancer
+Medical Genetics Summaries,journal_medicalgeneticssummaries
+HBPD INT,journal_hbpdint
+Cancer Cell,journal_cancercell
+Ann. Surg. Oncol.,journal_ann_surg_oncol_
+EMBO Rep.,journal_emborep_
+Proc. Natl. Acad. Sci. U.S.A.,journal_proc_natl_acad_sci_u_s_a_
+Mol. Cancer Ther.,journal_mol_cancerther_
+J. Exp. Clin. Cancer Res.,journal_j_exp_clin_cancerres_
+World J Surg Oncol,journal_worldjsurgoncol
+JAKSTAT,journal_jakstat
+Bioinformation,journal_bioinformation
+Cell. Signal.,journal_cell_signal_
+Adv Clin Exp Med,journal_advclinexpmed
+Endocr. Pathol.,journal_endocr_pathol_
+Carcinogenesis,journal_carcinogenesis
+Pharmacotherapy,journal_pharmacotherapy
+Cancer,journal_cancer
+Nat. Immunol.,journal_nat_immunol_
+Lancet Oncol.,journal_lancetoncol_
+Nat. Rev. Cancer,journal_nat_rev_cancer
+J Nippon Med Sch,journal_jnipponmedsch
+Cancer Immunol Res,journal_cancerimmunolres
+Cell Commun. Signal,journal_cellcommun_signal
+Genome Biol.,journal_genomebiol_
+JCO Precis Oncol,journal_jcoprecisoncol
+BMC Clin Pathol,journal_bmcclinpathol
+Gastric Cancer,journal_gastriccancer
+Dev. Biol.,journal_dev_biol_
+J. Gastroenterol.,journal_j_gastroenterol_
+Biochemistry,journal_biochemistry
+Nat. Genet.,journal_nat_genet_
+Stem Cells,journal_stemcells
+J. Oral Pathol. Med.,journal_j_oralpathol_med_
+Biomed Rep,journal_biomedrep
+PLoS ONE,journal_plosone
+Front Genet,journal_frontgenet
+Endocr. Relat. Cancer,journal_endocr_relat_cancer
+Nat. Rev. Mol. Cell Biol.,journal_nat_rev_mol_cellbiol_
+Nucleic Acids Res.,journal_nucleicacidsres_
+Yonsei Med. J.,journal_yonseimed_j_
+Nature,journal_nature
+Cell. Physiol. Biochem.,journal_cell_physiol_biochem_
+Annu Rev Genomics Hum Genet,journal_annurevgenomicshumgenet
+EBioMedicine,journal_ebiomedicine
+J Natl Compr Canc Netw,journal_jnatlcomprcancnetw
+Genomics,journal_genomics
+FEBS J.,journal_febsj_
+Curr. Mol. Med.,journal_curr_mol_med_
+Mol. Cell,journal_mol_cell
+Blood,journal_blood
+Clin. Genet.,journal_clin_genet_
+DNA Repair (Amst.),journal_dnarepairamst_
+Open Biol,journal_openbiol
+Int J Med Sci,journal_intjmedsci
+Urol. Int.,journal_urol_int_
+Pathol. Oncol. Res.,journal_pathol_oncol_res_
+Trends Pharmacol. Sci.,journal_trendspharmacol_sci_
+Mol Med Rep,journal_molmedrep
+Cell Prolif.,journal_cellprolif_
+Histopathology,journal_histopathology
+Int. J. Mol. Med.,journal_int_j_mol_med_
+Oncol Lett,journal_oncollett
+J. Endocrinol. Invest.,journal_j_endocrinol_invest_
+Anticancer Res.,journal_anticancerres_
+Mol Ther Nucleic Acids,journal_molthernucleicacids
+Cancer Discov,journal_cancerdiscov
+Mol. Carcinog.,journal_mol_carcinog_
+Onco Targets Ther,journal_oncotargetsther
+Cell Cycle,journal_cellcycle
+Int J Immunopathol Pharmacol,journal_intjimmunopatholpharmacol
+Elife,journal_elife
+Cancer Genet,journal_cancergenet
+Mol. Biol. Cell,journal_mol_biol_cell
+Haematologica,journal_haematologica
+Mol. Cancer,journal_mol_cancer
+J Cancer,journal_jcancer
+Front Mol Neurosci,journal_frontmolneurosci
+Clin. Dev. Immunol.,journal_clin_dev_immunol_
+APMIS,journal_apmis
+Curr Cancer Drug Targets,journal_currcancerdrugtargets
+Cells,journal_cells
+Cancer Manag Res,journal_cancermanagres
+Pathol. Int.,journal_pathol_int_
+Mod. Pathol.,journal_mod_pathol_
+J. Cancer Res. Clin. Oncol.,journal_j_cancerres_clin_oncol_
+Tumour Biol.,journal_tumourbiol_
+BMC Neurol,journal_bmcneurol
+Antioxid. Redox Signal.,journal_antioxid_redoxsignal_
+Cytokine Growth Factor Rev.,journal_cytokinegrowthfactorrev_
+J Carcinog,journal_jcarcinog
+Prostate,journal_prostate
+J. Mol. Med.,journal_j_mol_med_
+Semin. Cell Dev. Biol.,journal_semin_celldev_biol_
+Hum. Pathol.,journal_hum_pathol_
+FEBS Lett.,journal_febslett_
+Cancer Biomark,journal_cancerbiomark
+Mol. Cancer Res.,journal_mol_cancerres_
+NPJ Breast Cancer,journal_npjbreastcancer
+Annu. Rev. Cell Dev. Biol.,journal_annu_rev_celldev_biol_
+Int Rev Cell Mol Biol,journal_intrevcellmolbiol
+Expert Opin. Ther. Targets,journal_expertopin_ther_targets
+Cancers (Basel),journal_cancersbasel
+Cell Stress Chaperones,journal_cellstresschaperones
+Med. Oncol.,journal_med_oncol_
+Trends Cell Biol.,journal_trendscellbiol_
+Biomolecules,journal_biomolecules
+J. Endocrinol.,journal_j_endocrinol_
+Int. J. Biochem. Cell Biol.,journal_int_j_biochem_cellbiol_
+Front Immunol,journal_frontimmunol
+Lung Cancer,journal_lungcancer
+Int. J. Biol. Sci.,journal_int_j_biol_sci_
+Oncogenesis,journal_oncogenesis
+J. Exp. Med.,journal_j_exp_med_
+Nat. Med.,journal_nat_med_
+J. Histochem. Cytochem.,journal_j_histochem_cytochem_
+Biochem. J.,journal_biochem_j_
+J. Immunol.,journal_j_immunol_
+Meth. Enzymol.,journal_meth_enzymol_
+Front Oncol,journal_frontoncol
+Ann. Anat.,journal_ann_anat_
+Am. J. Clin. Pathol.,journal_am_j_clin_pathol_
+PLoS Genet.,journal_plosgenet_
+Acta Crystallogr F Struct Biol Commun,journal_actacrystallogrfstructbiolcommun
+Pharmacol. Ther.,journal_pharmacol_ther_
+EXCLI J,journal_exclij
+Genet. Mol. Res.,journal_genet_mol_res_
+Adv Med,journal_advmed
+Immunity,journal_immunity
+J Transl Med,journal_jtranslmed
+J BUON,journal_jbuon
+Crit Rev Oncog,journal_critrevoncog
+Br. J. Haematol.,journal_br_j_haematol_
+Breast J,journal_breastj
+Am J Cancer Res,journal_amjcancerres
+Calcif. Tissue Int.,journal_calcif_tissueint_
+Stem Cell Res,journal_stemcellres
+Toxicol. Appl. Pharmacol.,journal_toxicol_appl_pharmacol_
+Acta Neuropathol.,journal_actaneuropathol_
+EMBO J.,journal_emboj_
+J. Am. Coll. Surg.,journal_j_am_coll_surg_
+Arterioscler. Thromb. Vasc. Biol.,journal_arterioscler_thromb_vasc_biol_
+Int. J. Gynecol. Pathol.,journal_int_j_gynecol_pathol_
+Int J Clin Exp Pathol,journal_intjclinexppathol
+Dig Liver Dis,journal_digliverdis
+Neuroreport,journal_neuroreport
+Life Sci.,journal_lifesci_
+J. Cell Biol.,journal_j_cellbiol_
+J. Clin. Oncol.,journal_j_clin_oncol_
+Science,journal_science
+Mol. Aspects Med.,journal_mol_aspectsmed_
+IUBMB Life,journal_iubmblife
+Microb Cell,journal_microbcell
+Am. J. Hum. Genet.,journal_am_j_hum_genet_
+Acta Neuropathol Commun,journal_actaneuropatholcommun
+JAMA Netw Open,journal_jamanetwopen
+J. Gen. Virol.,journal_j_gen_virol_
+Trends Cancer,journal_trendscancer
+J Genet Genomics,journal_jgenetgenomics
+Nat. Cell Biol.,journal_nat_cellbiol_
+J. Pathol.,journal_j_pathol_
+Medicine (Baltimore),journal_medicinebaltimore
+Cancer Biol. Ther.,journal_cancerbiol_ther_
+Pediatr. Dev. Pathol.,journal_pediatr_dev_pathol_
+Cancer Treat. Rev.,journal_cancertreat_rev_
+Front Cell Dev Biol,journal_frontcelldevbiol
+Oncology,journal_oncology
+Pathol. Res. Pract.,journal_pathol_res_pract_
+Neoplasia,journal_neoplasia
+GeneReviews<sup>�</sup>,journal_genereviewssup__sup
+Oncol. Res.,journal_oncol_res_
+Neuro-oncology,journal_neuro_oncology
+Adv. Exp. Med. Biol.,journal_adv_exp_med_biol_
+Hum. Mutat.,journal_hum_mutat_
+Mol. Neurobiol.,journal_mol_neurobiol_
+"Philos. Trans. R. Soc. Lond., B, Biol. Sci.",journal_philos_trans_r_soc_lond_bbiol_sci_
+J Mol Model,journal_jmolmodel
+Exp. Oncol.,journal_exp_oncol_
+Respir. Res.,journal_respir_res_
+Cancer Commun (Lond),journal_cancercommunlond
+Horm Cancer,journal_hormcancer
+J. Med. Genet.,journal_j_med_genet_
+Mech. Ageing Dev.,journal_mech_ageingdev_
+RNA,journal_rna
+Cell. Mol. Life Sci.,journal_cell_mol_lifesci_
+Cancer Lett.,journal_cancerlett_
+Nat. Rev. Immunol.,journal_nat_rev_immunol_
+Sarcoma,journal_sarcoma
+Gastroenterol Res Pract,journal_gastroenterolrespract
+Matrix Biol.,journal_matrixbiol_
+Int. J. Surg. Pathol.,journal_int_j_surg_pathol_
+J Cell Commun Signal,journal_jcellcommunsignal
+Trends Mol Med,journal_trendsmolmed
+RNA Biol,journal_rnabiol
+Cell Res.,journal_cellres_
+Photochem. Photobiol.,journal_photochem_photobiol_
+Leuk. Res.,journal_leuk_res_
+FASEB J.,journal_fasebj_
+BMC Biochem.,journal_bmcbiochem_
+Gut,journal_gut
+Acta Biochim. Biophys. Sin. (Shanghai),journal_actabiochim_biophys_sin_shanghai
+Int. J. Hematol.,journal_int_j_hematol_
+Hum. Mol. Genet.,journal_hum_mol_genet_
+PLoS Pathog.,journal_plospathog_
+J. Invest. Dermatol.,journal_j_invest_dermatol_
+Reprod Sci,journal_reprodsci
+Cell. Oncol.,journal_cell_oncol_
+Curr. Top. Dev. Biol.,journal_curr_top_dev_biol_
+Gastroenterology,journal_gastroenterology
+Transl Oncol,journal_transloncol
+Brain Tumor Res Treat,journal_braintumorrestreat
+Acta Oncol,journal_actaoncol
+Pathology,journal_pathology
+Brain Res.,journal_brainres_
+Nat. Neurosci.,journal_nat_neurosci_
+Signal Transduct Target Ther,journal_signaltransducttargetther
+Breast Cancer Res.,journal_breastcancerres_
+PLoS Biol.,journal_plosbiol_
+Virchows Arch.,journal_virchowsarch_
+J. Inherit. Metab. Dis.,journal_j_inherit_metab_dis_
+Pigment Cell Melanoma Res,journal_pigmentcellmelanomares
+Crit. Rev. Biochem. Mol. Biol.,journal_crit_rev_biochem_mol_biol_
+J. Bone Miner. Res.,journal_j_boneminer_res_
+Blood Cancer J,journal_bloodcancerj
+Pharmacol. Res.,journal_pharmacol_res_
+Arch Iran Med,journal_archiranmed
+Oncologist,journal_oncologist
+Recent Pat Anticancer Drug Discov,journal_recentpatanticancerdrugdiscov
+Adv Biol Regul,journal_advbiolregul
+Genome Res.,journal_genomeres_
+Surg. Today,journal_surg_today
+J. Neurosci.,journal_j_neurosci_
+Protein Cell,journal_proteincell
+Trends Biochem. Sci.,journal_trendsbiochem_sci_
+Br. J. Dermatol.,journal_br_j_dermatol_
+J Thorac Oncol,journal_jthoraconcol
+Genome Med,journal_genomemed
+ScientificWorldJournal,journal_scientificworldjournal
+Endocrinology,journal_endocrinology
+Eur. J. Endocrinol.,journal_eur_j_endocrinol_
+J. Clin. Endocrinol. Metab.,journal_j_clin_endocrinol_metab_
+J. Genet.,journal_j_genet_
+Cell Tissue Res.,journal_celltissueres_
+N. Engl. J. Med.,journal_n_engl_j_med_
+Hepatology,journal_hepatology
+Eur J Med Genet,journal_eurjmedgenet
+Wiley Interdiscip Rev RNA,journal_wileyinterdisciprevrna
+ASN Neuro,journal_asnneuro
+Stem Cell Investig,journal_stemcellinvestig
+World J Biol Chem,journal_worldjbiolchem
+Curr. Opin. Immunol.,journal_curr_opin_immunol_
+Oncoimmunology,journal_oncoimmunology
+Exp. Cell Res.,journal_exp_cellres_
+J. Neurooncol.,journal_j_neurooncol_
+Leuk. Lymphoma,journal_leuk_lymphoma
+Immunol. Rev.,journal_immunol_rev_
+Biomark Res,journal_biomarkres
+Small GTPases,journal_smallgtpases
+Exp. Hematol.,journal_exp_hematol_
+PeerJ,journal_peerj
+Cell Death Differ.,journal_celldeathdiffer_
+Cell Biosci,journal_cellbiosci
+DNA Cell Biol.,journal_dnacellbiol_
+Arch. Gynecol. Obstet.,journal_arch_gynecol_obstet_
+Int. Immunol.,journal_int_immunol_
+J. Dermatol. Sci.,journal_j_dermatol_sci_
+BMC Nephrol,journal_bmcnephrol
+Nephron Exp. Nephrol.,journal_nephronexp_nephrol_
+J. Natl. Cancer Inst. Monographs,journal_j_natl_cancerinst_monographs
+J. Clin. Pathol.,journal_j_clin_pathol_
+Dis. Markers,journal_dis_markers
+Front Pharmacol,journal_frontpharmacol
+World J. Gastroenterol.,journal_worldj_gastroenterol_
+J Clin Med,journal_jclinmed
+Curr. Opin. Cell Biol.,journal_curr_opin_cellbiol_
+Acta Gastroenterol. Belg.,journal_actagastroenterol_belg_
+Appl. Immunohistochem. Mol. Morphol.,journal_appl_immunohistochem_mol_morphol_
+Endocr. Rev.,journal_endocr_rev_
+Biomed Res Int,journal_biomedresint
+Cold Spring Harb Perspect Med,journal_coldspringharbperspectmed
+J Ovarian Res,journal_jovarianres
+Int J Clin Exp Med,journal_intjclinexpmed
+FEBS Open Bio,journal_febsopenbio
+Pflugers Arch.,journal_pflugersarch_
+Nat. Biotechnol.,journal_nat_biotechnol_
+Future Oncol,journal_futureoncol
+J Mol Diagn,journal_jmoldiagn
+Curr Chem Genomics,journal_currchemgenomics
+Front Biosci (Landmark Ed),journal_frontbioscilandmarked
+Ann. Oncol.,journal_ann_oncol_
+J. Int. Med. Res.,journal_j_int_med_res_
+J Gastrointest Cancer,journal_jgastrointestcancer
+Epigenetics,journal_epigenetics
+Nucleus,journal_nucleus
+Expert Opin Investig Drugs,journal_expertopininvestigdrugs
+Curr. Genomics,journal_curr_genomics
+BMC Cell Biol.,journal_bmccellbiol_
+Cell Metab.,journal_cellmetab_
+Clin Transl Sci,journal_clintranslsci
+Anim Nutr,journal_animnutr
+NPJ Precis Oncol,journal_npjprecisoncol
+Curr Opin Pharmacol,journal_curropinpharmacol
+Development,journal_development
+Front Biosci (Schol Ed),journal_frontbioscischoled
+Genes Dis,journal_genesdis
+Pharmgenomics Pers Med,journal_pharmgenomicspersmed
+Neurochem. Int.,journal_neurochem_int_
+Biomedicines,journal_biomedicines
+Glycobiology,journal_glycobiology
+J Kidney Cancer VHL,journal_jkidneycancervhl
+Curr. Opin. Genet. Dev.,journal_curr_opin_genet_dev_
+Biochimie,journal_biochimie
+Semin. Cancer Biol.,journal_semin_cancerbiol_
+Int J Biochem Mol Biol,journal_intjbiochemmolbiol
+Biochem. Pharmacol.,journal_biochem_pharmacol_
+Immunology,journal_immunology
+Curr Oncol Rep,journal_curroncolrep
+Cancer Res Treat,journal_cancerrestreat
+Nat. Rev. Genet.,journal_nat_rev_genet_
+Rev Urol,journal_revurol
+J. Mol. Biol.,journal_j_mol_biol_
+Colorectal Dis,journal_colorectaldis
+Mutat. Res.,journal_mutat_res_
+Annu. Rev. Immunol.,journal_annu_rev_immunol_
+Eur. J. Cancer,journal_eur_j_cancer
+Protein Expr. Purif.,journal_proteinexpr_purif_
+Urol. Oncol.,journal_urol_oncol_
+J Cancer Res Ther,journal_jcancerresther
+Int. J. Food Microbiol.,journal_int_j_foodmicrobiol_
+Rev Endocr Metab Disord,journal_revendocrmetabdisord
+Curr Opin Endocrinol Diabetes Obes,journal_curropinendocrinoldiabetesobes
+Lab. Invest.,journal_lab_invest_
+J. Allergy Clin. Immunol.,journal_j_allergyclin_immunol_
+Intern. Med.,journal_intern_med_
+J Cancer Prev,journal_jcancerprev
+Cancer Genet. Cytogenet.,journal_cancergenet_cytogenet_
+Sao Paulo Med J,journal_saopaulomedj
+Med Sci Monit Basic Res,journal_medscimonitbasicres
+In Vitro Cell. Dev. Biol. Anim.,journal_invitrocell_dev_biol_anim_
+Dev Med Child Neurol,journal_devmedchildneurol
+BMC Genomics,journal_bmcgenomics
+Mol. Ther.,journal_mol_ther_
+Cell Oncol (Dordr),journal_celloncoldordr
+JCI Insight,journal_jciinsight
+BMJ Case Rep,journal_bmjcaserep
+Mol. Biol. Rep.,journal_mol_biol_rep_
+Annu Rev Pathol,journal_annurevpathol
+Aging (Albany NY),journal_agingalbanyny
+Theranostics,journal_theranostics
+Eur. J. Cancer Prev.,journal_eur_j_cancerprev_
+Gynecol. Oncol.,journal_gynecol_oncol_
+Artif Cells Nanomed Biotechnol,journal_artifcellsnanomedbiotechnol
+Am. J. Hematol.,journal_am_j_hematol_
+Front Endocrinol (Lausanne),journal_frontendocrinollausanne
+J. Natl. Cancer Inst.,journal_j_natl_cancerinst_
+Clin. Exp. Immunol.,journal_clin_exp_immunol_
+Am. J. Physiol. Gastrointest. Liver Physiol.,journal_am_j_physiol_gastrointest_liverphysiol_
+Bioessays,journal_bioessays
+Br. J. Pharmacol.,journal_br_j_pharmacol_
+Cancer Biol Med,journal_cancerbiolmed
+Kidney Blood Press. Res.,journal_kidneybloodpress_res_
+Case Rep Urol,journal_caserepurol
+Crit. Rev. Oncol. Hematol.,journal_crit_rev_oncol_hematol_
+Adv Genomics Genet,journal_advgenomicsgenet
+Ann Lab Med,journal_annlabmed
+Pediatr. Clin. North Am.,journal_pediatr_clin_northam_
+Nat. Struct. Mol. Biol.,journal_nat_struct_mol_biol_
+Dig. Dis. Sci.,journal_dig_dis_sci_
+Dig Dis,journal_digdis
+Hered Cancer Clin Pract,journal_heredcancerclinpract
+Med. Hypotheses,journal_med_hypotheses
+J. Mol. Endocrinol.,journal_j_mol_endocrinol_
+Pharmacol Rep,journal_pharmacolrep
+Genes Cancer,journal_genescancer
+Processes (Basel),journal_processesbasel
+BMB Rep,journal_bmbrep
+Exp. Lung Res.,journal_exp_lungres_
+Trends Genet.,journal_trendsgenet_
+Cancer Genomics Proteomics,journal_cancergenomicsproteomics
+Biochem. Soc. Trans.,journal_biochem_soc_trans_
+Anemia,journal_anemia
+Eur. J. Hum. Genet.,journal_eur_j_hum_genet_
+Transcription,journal_transcription
+J. Virol.,journal_j_virol_
+Biomaterials,journal_biomaterials
+Nat Rev Clin Oncol,journal_natrevclinoncol
+Eur. J. Med. Res.,journal_eur_j_med_res_
+Hum. Genomics,journal_hum_genomics
+Am. J. Respir. Cell Mol. Biol.,journal_am_j_respir_cellmol_biol_
+J Oncol,journal_joncol
+Bioorg. Med. Chem. Lett.,journal_bioorg_med_chem_lett_
+Mech. Dev.,journal_mech_dev_
+Fertil. Steril.,journal_fertil_steril_
+Genes (Basel),journal_genesbasel
+Medicina (Kaunas),journal_medicinakaunas
+J. Biochem.,journal_j_biochem_
+J. Steroid Biochem. Mol. Biol.,journal_j_steroidbiochem_mol_biol_
+Mol. Cell. Endocrinol.,journal_mol_cell_endocrinol_
+Pharmacol. Rev.,journal_pharmacol_rev_
+Semin. Oncol.,journal_semin_oncol_
+J Immunother Cancer,journal_jimmunothercancer
+J Gastrointest Oncol,journal_jgastrointestoncol
+Gynecol Oncol Rep,journal_gynecoloncolrep
+Cold Spring Harb Mol Case Stud,journal_coldspringharbmolcasestud
+Cold Spring Harb Perspect Biol,journal_coldspringharbperspectbiol
+Med. Sci. Monit.,journal_med_sci_monit_
+Annu. Rev. Pharmacol. Toxicol.,journal_annu_rev_pharmacol_toxicol_
+Cancer Epidemiol. Biomarkers Prev.,journal_cancerepidemiol_biomarkersprev_
+Immunol. Cell Biol.,journal_immunol_cellbiol_
+Curr Drug Deliv,journal_currdrugdeliv
+PLoS Med.,journal_plosmed_
+J. Pharmacol. Exp. Ther.,journal_j_pharmacol_exp_ther_
+Mol. Endocrinol.,journal_mol_endocrinol_
+Breast Dis,journal_breastdis
+Can J Gastroenterol Hepatol,journal_canjgastroenterolhepatol
+Chirurgia (Bucur),journal_chirurgiabucur
+J. Comp. Neurol.,journal_j_comp_neurol_
+Circ. J.,journal_circ_j_
+Diabetes Res. Clin. Pract.,journal_diabetesres_clin_pract_
+Case Rep Pathol,journal_casereppathol
+Curr. Pharm. Des.,journal_curr_pharm_des_
+Curr. Opin. Hematol.,journal_curr_opin_hematol_
+Drug Des Devel Ther,journal_drugdesdevelther
+Cancer Metastasis Rev.,journal_cancermetastasisrev_
+Am. J. Med. Genet. A,journal_am_j_med_genet_a
+Autophagy,journal_autophagy
+Dev. Cell,journal_dev_cell
+Nucl Recept Signal,journal_nuclreceptsignal
+Cell J,journal_cellj
+Arch. Immunol. Ther. Exp. (Warsz.),journal_arch_immunol_ther_exp_warsz_
+Eur. J. Haematol.,journal_eur_j_haematol_
+Expert Rev Clin Pharmacol,journal_expertrevclinpharmacol
+Int J Colorectal Dis,journal_intjcolorectaldis
+Ann Coloproctol,journal_anncoloproctol
+Reprod Biol,journal_reprodbiol
+Mol. Immunol.,journal_mol_immunol_
+J Surg Oncol,journal_jsurgoncol
+Chromosoma,journal_chromosoma
+Arch. Pathol. Lab. Med.,journal_arch_pathol_lab_med_
+Int. J. Gynecol. Cancer,journal_int_j_gynecol_cancer
+Transfusion,journal_transfusion
+Nat Rev Drug Discov,journal_natrevdrugdiscov
+J Mammary Gland Biol Neoplasia,journal_jmammaryglandbiolneoplasia
+Wiley Interdiscip Rev Dev Biol,journal_wileyinterdisciprevdevbiol
+BJU Int.,journal_bjuint_
+Cell Stem Cell,journal_cellstemcell
+Oral Oncol.,journal_oraloncol_
+Biomed. Res.,journal_biomed_res_
+Clin Transl Med,journal_clintranslmed
+Cell. Immunol.,journal_cell_immunol_
+Microbiol. Immunol.,journal_microbiol_immunol_
+Avicenna J Med Biotechnol,journal_avicennajmedbiotechnol
+Clin Exp Gastroenterol,journal_clinexpgastroenterol
+Clin Rev Allergy Immunol,journal_clinrevallergyimmunol
+Eur Rev Med Pharmacol Sci,journal_eurrevmedpharmacolsci
+"Am. J. Physiol., Cell Physiol.",journal_am_j_physiol_cellphysiol_
+Breast Cancer (Auckl),journal_breastcancerauckl
+BMC Dev. Biol.,journal_bmcdev_biol_
+EMBO Mol Med,journal_embomolmed
+Biosci. Rep.,journal_biosci_rep_
+BMC Res Notes,journal_bmcresnotes
+Nat Rev Urol,journal_natrevurol
+Biomark Med,journal_biomarkmed
+Head Neck Pathol,journal_headneckpathol
+Clin Respir J,journal_clinrespirj
+J. Surg. Res.,journal_j_surg_res_
+Pathobiology,journal_pathobiology
+Immunol. Lett.,journal_immunol_lett_
+J Immunol Res,journal_jimmunolres
+Atherosclerosis,journal_atherosclerosis
+Chem. Res. Toxicol.,journal_chem_res_toxicol_
+Molecules,journal_molecules
+J. Urol.,journal_j_urol_
+Cancer Prev Res (Phila),journal_cancerprevresphila
+Pharmacogenomics,journal_pharmacogenomics
+Ann. N. Y. Acad. Sci.,journal_ann_n_y_acad_sci_
+JAMA Ophthalmol,journal_jamaophthalmol
+Oncoscience,journal_oncoscience
+Nat Rev Rheumatol,journal_natrevrheumatol
+BioDrugs,journal_biodrugs
+Brief Funct Genomic Proteomic,journal_brieffunctgenomicproteomic
+Ther Adv Hematol,journal_theradvhematol
+Target Oncol,journal_targetoncol
+Arab J Gastroenterol,journal_arabjgastroenterol
+Curr Drug Targets,journal_currdrugtargets
+Mol. Cell Proteomics,journal_mol_cellproteomics
+J Hematol Oncol,journal_jhematoloncol
+Hematol. Oncol. Clin. North Am.,journal_hematol_oncol_clin_northam_
+Mol Oncol,journal_moloncol
+Hematol Oncol,journal_hematoloncol
+Neuron,journal_neuron
+Breast Cancer (Dove Med Press),journal_breastcancerdovemedpress
+PPAR Res,journal_pparres
+Cancer Immunol. Immunother.,journal_cancerimmunol_immunother_
+Pharmaceuticals (Basel),journal_pharmaceuticalsbasel
+Proteomics,journal_proteomics
+Structure,journal_structure
+Clin Transl Gastroenterol,journal_clintranslgastroenterol
+Cancer J,journal_cancerj
+Bioarchitecture,journal_bioarchitecture
+Dis. Esophagus,journal_dis_esophagus
+JAMA Oncol,journal_jamaoncol
+J Blood Med,journal_jbloodmed
+Tohoku J. Exp. Med.,journal_tohokuj_exp_med_
+Biochim Biophys Acta Mol Basis Dis,journal_biochimbiophysactamolbasisdis
+Cell. Mol. Biol. Lett.,journal_cell_mol_biol_lett_
+Jpn. J. Clin. Oncol.,journal_jpn_j_clin_oncol_
+J. Hepatol.,journal_j_hepatol_
+Oxid Med Cell Longev,journal_oxidmedcelllongev
+Orphanet J Rare Dis,journal_orphanetjraredis
+Trends Endocrinol. Metab.,journal_trendsendocrinol_metab_
+Am J Clin Exp Urol,journal_amjclinexpurol
+Life Sci Alliance,journal_lifescialliance
+J. Proteome Res.,journal_j_proteomeres_
+J. Interferon Cytokine Res.,journal_j_interferoncytokineres_
+Thorac Cancer,journal_thoraccancer
+Am. J. Physiol. Lung Cell Mol. Physiol.,journal_am_j_physiol_lungcellmol_physiol_
+J. Gastroenterol. Hepatol.,journal_j_gastroenterol_hepatol_
+Per Med,journal_permed
+Cell Biochem. Biophys.,journal_cellbiochem_biophys_
+Mol Syndromol,journal_molsyndromol
+Melanoma Res.,journal_melanomares_
+Clin Epigenetics,journal_clinepigenetics
+Genet. Mol. Biol.,journal_genet_mol_biol_
+Eur. J. Biochem.,journal_eur_j_biochem_
+Expert Opin Biol Ther,journal_expertopinbiolther
+BMC Med. Genet.,journal_bmcmed_genet_
+Int. J. Biol. Macromol.,journal_int_j_biol_macromol_
+J Drug Target,journal_jdrugtarget
+J. Cell. Mol. Med.,journal_j_cell_mol_med_
+BMC Med Genomics,journal_bmcmedgenomics
+Eur. J. Cell Biol.,journal_eur_j_cellbiol_
+Exp. Biol. Med. (Maywood),journal_exp_biol_med_maywood
+Hear. Res.,journal_hear_res_
+Cell Calcium,journal_cellcalcium
+Vaccines (Basel),journal_vaccinesbasel
+Autoimmunity,journal_autoimmunity
+Nat Rev Dis Primers,journal_natrevdisprimers
+Surgery,journal_surgery
+Enzymes,journal_enzymes
+Metabolites,journal_metabolites
+Cell Logist,journal_celllogist
+Annu. Rev. Genet.,journal_annu_rev_genet_
+Discov Med,journal_discovmed
+Adv. Cancer Res.,journal_adv_cancerres_
+Drug Resist. Updat.,journal_drugresist_updat_
+Cold Spring Harb. Symp. Quant. Biol.,journal_coldspringharb_symp_quant_biol_
+Cell Growth Differ.,journal_cellgrowthdiffer_
+Neoplasma,journal_neoplasma
+J. Pediatr. Hematol. Oncol.,journal_j_pediatr_hematol_oncol_
+Neurosurg Focus,journal_neurosurgfocus
+ACS Chem. Biol.,journal_acschem_biol_
+Sci Signal,journal_scisignal
+Circulation,journal_circulation
+Curr Opin Chem Biol,journal_curropinchembiol
+Exp. Mol. Pathol.,journal_exp_mol_pathol_
+Brief Funct Genomics,journal_brieffunctgenomics
+Pediatr Hematol Oncol,journal_pediatrhematoloncol
+Ann Diagn Pathol,journal_anndiagnpathol
+Cytoskeleton (Hoboken),journal_cytoskeletonhoboken
+Exp Hematol Oncol,journal_exphematoloncol
+J. Thromb. Haemost.,journal_j_thromb_haemost_
+Mol. Cells,journal_mol_cells
+Histol. Histopathol.,journal_histol_histopathol_
+Endocr Connect,journal_endocrconnect
+J. Mol. Neurosci.,journal_j_mol_neurosci_
+Mol. Cell. Biochem.,journal_mol_cell_biochem_
+J. Neurochem.,journal_j_neurochem_
+Cancer Control,journal_cancercontrol
+Proteomes,journal_proteomes
+BMC Endocr Disord,journal_bmcendocrdisord
+Cardiovasc. Res.,journal_cardiovasc_res_
+Panminerva Med,journal_panminervamed
+Appl. Biochem. Biotechnol.,journal_appl_biochem_biotechnol_
+Lancet Respir Med,journal_lancetrespirmed
+J. Pharmacol. Sci.,journal_j_pharmacol_sci_
+Biol. Cell,journal_biol_cell
+Clin Pharmacol,journal_clinpharmacol
+Fam. Cancer,journal_fam_cancer
+Cell Div,journal_celldiv
+Am. J. Physiol. Renal Physiol.,journal_am_j_physiol_renalphysiol_
+Pharm. Res.,journal_pharm_res_
+Eur Surg Res,journal_eursurgres
+Jpn. J. Cancer Res.,journal_jpn_j_cancerres_
+Clin Transl Oncol,journal_clintransloncol
+Int J Stem Cells,journal_intjstemcells
+J Mol Signal,journal_jmolsignal
+Pancreas,journal_pancreas
+J. Pediatr. Surg.,journal_j_pediatr_surg_
+Blood Rev.,journal_bloodrev_
+Protein Sci.,journal_proteinsci_
+Ann. Hematol.,journal_ann_hematol_
+Curr Opin Oncol,journal_curropinoncol
+Ann. Endocrinol. (Paris),journal_ann_endocrinol_paris
+Thyroid,journal_thyroid
+Prog. Neurobiol.,journal_prog_neurobiol_
+Mol Biosyst,journal_molbiosyst
+Mol. Genet. Metab.,journal_mol_genet_metab_
+Physiol. Rev.,journal_physiol_rev_
+World J Clin Oncol,journal_worldjclinoncol
+Biol. Chem.,journal_biol_chem_
+Int. J. Dev. Biol.,journal_int_j_dev_biol_
+Am Soc Clin Oncol Educ Book,journal_amsocclinoncoleducbook
+Neuropathology,journal_neuropathology
+Sci Transl Med,journal_scitranslmed
+Neuropharmacology,journal_neuropharmacology
+Andrologia,journal_andrologia
+Neth J Med,journal_nethjmed
+Dev. Dyn.,journal_dev_dyn_
+Clin. Exp. Metastasis,journal_clin_exp_metastasis
+Genet Test Mol Biomarkers,journal_genettestmolbiomarkers
+Ann. Clin. Lab. Sci.,journal_ann_clin_lab_sci_
+Genetica,journal_genetica
+J. Androl.,journal_j_androl_
+J. Cutan. Pathol.,journal_j_cutan_pathol_
+J Clin Neurosci,journal_jclinneurosci
+Nucl Receptor Res,journal_nuclreceptorres
+Int. J. Cardiol.,journal_int_j_cardiol_
+Environ. Mol. Mutagen.,journal_environ_mol_mutagen_
+Hepatogastroenterology,journal_hepatogastroenterology
+J. Immunother.,journal_j_immunother_
+Nat Rev Endocrinol,journal_natrevendocrinol
+Chin J Cancer,journal_chinjcancer
+Circ. Res.,journal_circ_res_
+Hum. Genet.,journal_hum_genet_
+J. Intern. Med.,journal_j_intern_med_
+Biochim Biophys Acta Proteins Proteom,journal_biochimbiophysactaproteinsproteom
+Commun Integr Biol,journal_communintegrbiol
+Ann Transl Med,journal_anntranslmed
+Autoimmun Rev,journal_autoimmunrev
+Atlas Genet Cytogenet Oncol Haematol,journal_atlasgenetcytogenetoncolhaematol
+Genes Immun.,journal_genesimmun_
+Laryngoscope,journal_laryngoscope
+Expert Rev Anticancer Ther,journal_expertrevanticancerther
+Anticancer Drugs,journal_anticancerdrugs
+Am J Dermatopathol,journal_amjdermatopathol
+Traffic,journal_traffic
+Differentiation,journal_differentiation
+Cancer Gene Ther.,journal_cancergenether_
+Bone,journal_bone
+Indian J Pathol Microbiol,journal_indianjpatholmicrobiol
+Vaccine,journal_vaccine
+J Hematop,journal_jhematop
+Cereb. Cortex,journal_cereb_cortex
+Best Pract Res Clin Haematol,journal_bestpractresclinhaematol
+Mol Biol Int,journal_molbiolint
+Eur Arch Otorhinolaryngol,journal_eurarchotorhinolaryngol
+Bioorg. Med. Chem.,journal_bioorg_med_chem_
+Clin Lung Cancer,journal_clinlungcancer
+Epigenetics Chromatin,journal_epigeneticschromatin
+Biosci Trends,journal_bioscitrends
+Genetics,journal_genetics
+J. Neuropathol. Exp. Neurol.,journal_j_neuropathol_exp_neurol_
+Biol. Reprod.,journal_biol_reprod_
+BMJ Open,journal_bmjopen
+Int J Exp Pathol,journal_intjexppathol
+J. Mol. Histol.,journal_j_mol_histol_
+J Neurol Surg B Skull Base,journal_jneurolsurgbskullbase
+Chem Biol Drug Des,journal_chembioldrugdes
+Stem Cells Int,journal_stemcellsint
+Gen. Physiol. Biophys.,journal_gen_physiol_biophys_
+Exp Ther Med,journal_expthermed
+Biochim Biophys Acta Mol Cell Biol Lipids,journal_biochimbiophysactamolcellbiollipids
+Comput Biol Chem,journal_computbiolchem
+Mol. Gen. Mikrobiol. Virusol.,journal_mol_gen_mikrobiol_virusol_
+Curr. Top. Microbiol. Immunol.,journal_curr_top_microbiol_immunol_
+Nat Rev Cardiol,journal_natrevcardiol
+Annu. Rev. Biochem.,journal_annu_rev_biochem_
+Arthritis Rheum.,journal_arthritisrheum_
+Am J Blood Res,journal_amjbloodres
+Crit Rev Clin Lab Sci,journal_critrevclinlabsci
+Pharmazie,journal_pharmazie
+Head Neck,journal_headneck
+JAMA,journal_jama
+Curr Osteoporos Rep,journal_currosteoporosrep
+BMC Pulm Med,journal_bmcpulmmed
+Diabetes Obes Metab,journal_diabetesobesmetab
+Cytokine,journal_cytokine
+Front. Biosci.,journal_front_biosci_
+Asian J. Androl.,journal_asianj_androl_
+Prog Mol Biol Transl Sci,journal_progmolbioltranslsci
+Ther Adv Med Oncol,journal_theradvmedoncol
+Indian J Cancer,journal_indianjcancer
+Front Med,journal_frontmed
+Mol. Biol. Evol.,journal_mol_biol_evol_
+Cancer Cytopathol,journal_cancercytopathol
+Medchemcomm,journal_medchemcomm
+Growth Factors,journal_growthfactors
+Eur. J. Immunol.,journal_eur_j_immunol_
+Radiat Environ Biophys,journal_radiatenvironbiophys
+Drug Discov. Today,journal_drugdiscov_today
+Colloids Surf B Biointerfaces,journal_colloidssurfbbiointerfaces
+J. Biol. Regul. Homeost. Agents,journal_j_biol_regul_homeost_agents
+J. Orthop. Res.,journal_j_orthop_res_
+Med Res Rev,journal_medresrev
+Mol. Psychiatry,journal_mol_psychiatry
+Neurosci Biobehav Rev,journal_neuroscibiobehavrev
+Mol Cell Oncol,journal_molcelloncol
+Biotechnol. Appl. Biochem.,journal_biotechnol_appl_biochem_
+Curr. Opin. Struct. Biol.,journal_curr_opin_struct_biol_
+Biochim Biophys Acta Rev Cancer,journal_biochimbiophysactarevcancer
+Arch. Pharm. Res.,journal_arch_pharm_res_
+J. Gastrointest. Surg.,journal_j_gastrointest_surg_
+Asia Pac J Clin Oncol,journal_asiapacjclinoncol
+Eur. Urol.,journal_eur_urol_
+Genes Cells,journal_genescells
+Bosn J Basic Med Sci,journal_bosnjbasicmedsci
+Am. J. Reprod. Immunol.,journal_am_j_reprod_immunol_
+World Neurosurg,journal_worldneurosurg
+Cell Discov,journal_celldiscov
+Clin. Immunol.,journal_clin_immunol_
+J. Muscle Res. Cell. Motil.,journal_j_muscleres_cell_motil_
+Clin. Gastroenterol. Hepatol.,journal_clin_gastroenterol_hepatol_
+Steroids,journal_steroids
+Cancer Epidemiol,journal_cancerepidemiol
+Brain Tumor Pathol,journal_braintumorpathol
+Turk J Med Sci,journal_turkjmedsci
+Indian J Dent Res,journal_indianjdentres
+Korean J. Physiol. Pharmacol.,journal_koreanj_physiol_pharmacol_
+Immunogenetics,journal_immunogenetics
+Diseases,journal_diseases
+Biology (Basel),journal_biologybasel
+Mol Genet Genomic Med,journal_molgenetgenomicmed
+Oral Dis,journal_oraldis
+Exp. Dermatol.,journal_exp_dermatol_
+Front Neurol,journal_frontneurol
+Semin Cutan Med Surg,journal_semincutanmedsurg
+Mol. Med.,journal_mol_med_
+Saudi J Gastroenterol,journal_saudijgastroenterol
+Open Med (Wars),journal_openmedwars
+Cytogenet. Genome Res.,journal_cytogenet_genomeres_
+Biochem. Soc. Symp.,journal_biochem_soc_symp_
+Clin. Chem.,journal_clin_chem_
+J Mol Cell Biol,journal_jmolcellbiol
+Biomark Insights,journal_biomarkinsights
+Clin Genitourin Cancer,journal_clingenitourincancer
+Otolaryngol Head Neck Surg,journal_otolaryngolheadnecksurg
+BMJ,journal_bmj
+Immunotherapy,journal_immunotherapy
+Clin Oral Investig,journal_clinoralinvestig
+Scand. J. Gastroenterol.,journal_scand_j_gastroenterol_
+Braz J Cardiovasc Surg,journal_brazjcardiovascsurg
+Brain Dev.,journal_braindev_
+Redox Biol,journal_redoxbiol
+Biomol Ther (Seoul),journal_biomoltherseoul
+Eur. Respir. J.,journal_eur_respir_j_
+Nat. Chem. Biol.,journal_nat_chem_biol_
+Acta Crystallogr. D Biol. Crystallogr.,journal_actacrystallogr_dbiol_crystallogr_
+J. Leukoc. Biol.,journal_j_leukoc_biol_
+Chromosome Res.,journal_chromosomeres_
+Chembiochem,journal_chembiochem
+Biol Open,journal_biolopen
+Brain,journal_brain
+Heart Rhythm,journal_heartrhythm
+J. Med. Chem.,journal_j_med_chem_
+ACS Med Chem Lett,journal_acsmedchemlett
+Immunol. Res.,journal_immunol_res_
+AIDS,journal_aids
+Nat. Methods,journal_nat_methods
+Tissue Antigens,journal_tissueantigens
+Nat. Struct. Biol.,journal_nat_struct_biol_
+Biopolymers,journal_biopolymers
+Cell Chem Biol,journal_cellchembiol
+BMC Biol.,journal_bmcbiol_
+Ann. Neurol.,journal_ann_neurol_
+J. Am. Chem. Soc.,journal_j_am_chem_soc_
+Sci Adv,journal_sciadv
+J Signal Transduct,journal_jsignaltransduct
+Front Mol Biosci,journal_frontmolbiosci
+Rev Esp Patol,journal_revesppatol
+J. Pediatr. Endocrinol. Metab.,journal_j_pediatr_endocrinol_metab_
+iScience,journal_iscience
+Cell. Mol. Biol. (Noisy-le-grand),journal_cell_mol_biol_noisy_le_grand
+JAMA Dermatol,journal_jamadermatol
+Glia,journal_glia
+Pathologe,journal_pathologe
+Indian J Clin Biochem,journal_indianjclinbiochem
+Cent European J Urol,journal_centeuropeanjurol
+ESMO Open,journal_esmoopen
+Radiother Oncol,journal_radiotheroncol
+J Chem Inf Model,journal_jcheminfmodel
+Exp. Mol. Med.,journal_exp_mol_med_
+Cell. Mol. Neurobiol.,journal_cell_mol_neurobiol_
+Hum. Immunol.,journal_hum_immunol_
+Pathophysiology,journal_pathophysiology
+Clin. Biochem.,journal_clin_biochem_
+Horm Res Paediatr,journal_hormrespaediatr
+BMC Ophthalmol,journal_bmcophthalmol
+Immunol. Invest.,journal_immunol_invest_
+Eur J Surg Oncol,journal_eurjsurgoncol
+CNS Neurosci Ther,journal_cnsneuroscither
+Adv. Immunol.,journal_adv_immunol_
+Front Physiol,journal_frontphysiol
+Indian J. Med. Res.,journal_indianj_med_res_
+Intractable Rare Dis Res,journal_intractableraredisres
+Acta Haematol.,journal_actahaematol_
+Front Neurosci,journal_frontneurosci
+Eur. J. Pharmacol.,journal_eur_j_pharmacol_
+Eur. J. Clin. Invest.,journal_eur_j_clin_invest_
+Anal Cell Pathol (Amst),journal_analcellpatholamst
+Anal. Biochem.,journal_anal_biochem_
+Curr Probl Cancer,journal_currproblcancer
+Methods Mol. Biol.,journal_methodsmol_biol_
+Liver Cancer,journal_livercancer
+Hematology,journal_hematology
+Scand. J. Immunol.,journal_scand_j_immunol_
+BMC Immunol.,journal_bmcimmunol_
+Immunopharmacol Immunotoxicol,journal_immunopharmacolimmunotoxicol
+Immune Netw,journal_immunenetw
+Microbiol Spectr,journal_microbiolspectr
+Invest. Ophthalmol. Vis. Sci.,journal_invest_ophthalmol_vis_sci_
+Zh Nevrol Psikhiatr Im S S Korsakova,journal_zhnevrolpsikhiatrimsskorsakova
+Stem Cells Dev.,journal_stemcellsdev_
+Epigenomics,journal_epigenomics
+Cell Biochem. Funct.,journal_cellbiochem_funct_
+BMC Mol Cell Biol,journal_bmcmolcellbiol
+Biochim Biophys Acta Biomembr,journal_biochimbiophysactabiomembr
+Am J Clin Exp Immunol,journal_amjclinexpimmunol
+Lung Cancer Manag,journal_lungcancermanag
+J. Neurosci. Res.,journal_j_neurosci_res_
+Expert Rev Hematol,journal_expertrevhematol

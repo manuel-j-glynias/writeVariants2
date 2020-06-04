@@ -1,0 +1,875 @@
+directive @relation (
+    name: String
+    direction: String
+) on FIELD_DEFINITION
+
+
+type User {
+    id: ID!
+    name: String!
+    password: String!
+    isAdmin: Boolean!
+    editedStatements: [EditableObject]! @relation(name: "EDITED_BY", direction: "IN")
+}
+
+
+interface Reference {
+    id: ID!
+    shortReference: String!
+    statementsReferenced: [EditableObject!]! @relation(name: "REFERENCE_FOR", direction: "IN")
+}
+
+interface EditableObject{
+    id: ID!
+    field: String!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")}
+
+type EditableStatement implements EditableObject{
+    id: ID!
+    field: String!
+    statement: String!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+type EditableSynonymList  implements EditableObject{
+    id: ID!
+    field: String!
+    list: [String]!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+enum VariantType {
+    CNV
+    Fusion
+    Indel
+    MNV
+    Region
+    SNV
+}
+
+enum IndelType {
+    Deletion
+    Duplication
+    InsertionDeletion
+    Insertion
+    MNV
+    SNV
+}
+
+enum RegionType {
+    Codon
+    Exon
+    Gene
+}
+
+enum VariantProteinEffect {
+    GainOfFunction
+    GainOfFunctionPredicted
+    LossOfFunction
+    LossOfFunctionPredicted
+    NoEffect
+    Unknown
+}
+type EditableProteinEffect  implements EditableObject{
+    id: ID!
+    field: String!
+    proteinEffect: VariantProteinEffect!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+enum CNVType {
+    Gain
+    Loss
+    Indeterminate
+}
+
+type EditableCopyChange  implements EditableObject{
+    id: ID!
+    field: String!
+    cnvType: CNVType!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+type EditableBoolean  implements EditableObject{
+    id: ID!
+    field: String!
+    boolean: Boolean!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+type EditableInt  implements EditableObject{
+    id: ID!
+    field: String!
+    int: Int!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+type EditableFloat  implements EditableObject{
+    id: ID!
+    field: String!
+    float: Float!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+enum TMBInterpretationType {
+    Low
+    Intermediate
+    High
+}
+type EditableTMBInterpretation  implements EditableObject{
+    id: ID!
+    field: String!
+    tmbInterpretation: TMBInterpretationType!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+type Author {
+    id: ID!
+    firstInitial: String!
+    surname: String!
+    references:[LiteratureReference!]! @relation(name: "AUTHORED_BY", direction: "IN")
+}
+
+type Journal  {
+    id: ID!
+    name: String!
+}
+
+type LiteratureReference implements Reference {
+    id: ID!
+    shortReference: String!
+    statementsReferenced: [EditableObject!]!  @relation(name: "REFERENCE_FOR", direction: "IN")
+    authors : [Author!]!  @relation(name: "AUTHORED_BY", direction: "OUT")
+    title: String!
+    journal: Journal!  @relation(name: "PUBLISHED_IN", direction: "OUT")
+    volume: String!
+    firstPage: String!
+    lastPage: String!
+    publicationYear: String!
+    DOI: String
+    PMID: String
+    abstract:  String
+}
+
+# could transform current clinicaltrials.gov pipeline to create trial objects
+type ClinicalTrial  {
+    id: ID!
+    name: String!
+    resource: String!
+    resourceId: String!
+    acronym: String
+    briefTitle: String
+    officialTitle: String!
+    references: [Reference!]! @relation(name: "REFERENCE_FOR", direction: "IN")
+}
+
+# may want FDA label and/or guideline references?
+
+type MeetingAbstractReference implements Reference {
+    id: ID!
+    shortReference: String!
+    statementsReferenced: [EditableObject!]!  @relation(name: "REFERENCE_FOR", direction: "IN")
+    title: String!
+    abstract: String
+    meetingName: String!
+    meetingDate: String!
+    authors : [Author!]!  @relation(name: "AUTHORED_BY", direction: "OUT")
+}
+
+type InternetReference implements Reference{
+    id: ID!
+    shortReference: String!
+    statementsReferenced: [EditableObject!]!  @relation(name: "REFERENCE_FOR", direction: "IN")
+    webAddress: String!
+    accessedDate: String!
+}
+
+
+type JaxGene   {
+    id: ID!
+    #    name == Gene Symbox
+    name: String!
+    description: EditableStatement!
+    entrezId: String!
+    jaxId: String!
+    chromosome: String!
+    synonyms: EditableSynonymList!
+    canonicalTranscript:[EditableStatement]!
+}
+
+enum Strand {
+    Forward
+    Reverse
+}
+
+type MyGeneInfoGene   {
+    id: ID!
+    name: String!
+    description: EditableStatement!
+    chromosome: String!
+    strand: Strand!
+    start: Int
+    end: Int
+#    synonyms: EditableSynonymList!
+    entrezId: String!
+    uniprotEntry: UniprotEntry! @relation(name: "CODED_BY", direction: "IN")
+}
+
+type UniprotEntry  {
+    id: ID!
+    name: String!
+    function: EditableStatement!
+    uniprotId:String!
+    accessionNumber: String!
+    gene: MyGeneInfoGene! @relation(name: "CODED_BY", direction: "OUT")
+}
+
+interface Target {
+    id: ID!
+    name: String!
+}
+
+type OmniGene implements Target  {
+    id: ID!
+    name: String!
+    panelName: String!
+    geneDescription: EditableStatement!
+    oncogenicCategory: EditableStatement!
+    synonyms: EditableSynonymList!
+    transcript: EditableStatement!
+    myGeneInfoGene: MyGeneInfoGene!
+    uniprotEntry: UniprotEntry
+    jaxGene: JaxGene
+    variants: [GenomicVariant]! @relation(name: "VARIANT_OF", direction: "IN")
+    variantMarkers: [GenomicVariantMarker]!  @relation(name: "MARKER_OF", direction: "IN")
+}
+type EditableOmniGeneReference  implements EditableObject{
+    id: ID!
+    field: String!
+    gene: OmniGene!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+enum OmniConjunction {
+    Any
+    All
+    None
+}
+
+interface MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+}
+
+enum DNAMarkerType {
+    MicrosatelliteInstabilityLocus
+    Karyotype
+}
+
+type DNAMarker implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+    definition: EditableStatement!
+    markerType: DNAMarkerType!
+}
+
+type MSIMarker implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+}
+
+
+
+type TMBMarker implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+    resultMin: EditableFloat
+    resultMax: EditableFloat
+    interpretations: [EditableTMBInterpretation]
+}
+
+type RNASeqSignatureMarker implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+    definition: EditableStatement!
+    resultMin: EditableFloat
+    resultMax: EditableFloat
+    interpretations: [EditableTMBInterpretation]
+    markerProfile: MarkerProfile! @relation(name:"FOR_MARKER_PROFILE", direction:"IN")
+}
+
+interface ProteinLevelAssay {
+    id: ID!
+    name: EditableStatement!
+}
+
+enum AssayComparator {
+    #ABOVE
+    #BELOW
+    EqualsMin
+    Range
+}
+
+type IHCAssay implements ProteinLevelAssay {
+    id: ID!
+    name: EditableStatement!
+    antibodyClone: EditableStatement!
+    comparator: AssayComparator!
+    #percentPositive: Int!
+    # Need to handle non-numeric IHC results like "<1"
+    resultMin: EditableFloat!
+    resultMax: EditableFloat
+    resultUnits: EditableStatement!
+    proteinExpressionMarkers: [ProteinExpressionMarker]! @relation(name: "HAS_MARKER", direction:"OUT")
+}
+
+enum RNASeqResultType {
+    nRPM
+    RankScore
+}
+
+type RNASeqAssay implements ProteinLevelAssay {
+    id: ID!
+    name: EditableStatement!
+    comparator: AssayComparator!
+    #rankScore: Int!
+    resultMin: EditableFloat!
+    resultMax: EditableFloat
+    resultType: RNASeqResultType!
+    proteinExpressionMarkers: [ProteinExpressionMarker]! @relation(name: "HAS_MARKER", direction:"OUT")
+}
+
+enum ImmunePhenotype {
+    AntiInflammatoryResponse
+    CancerTestisAntigen
+    CheckpointBlockadePD1CTLA4
+    CheckpointBlockadeOther
+    MetabolicImmuneEscape
+    MyeloidSuppression
+    OtherImmunotherapyMarkers
+    ProInflammatoryResponse
+    TCellPrimed
+    TumorInfiltratingLymphocytes
+}
+type EditableImmunePhenotype   implements EditableObject{
+    id: ID!
+    field: String!
+    immunePhenotype: ImmunePhenotype!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+enum ImmuneFunction {
+    AntiInflammatory
+    BCells
+    CoInhibitory
+    CoStimulatory
+    CytotoxicTCellsTRegs
+    Immunostimulatory
+    Immunosuppressive
+    NKCells
+    ProInflammatory
+    Unknown
+}
+type EditableImmuneFunction   implements EditableObject{
+    id: ID!
+    field: String!
+    immuneFunction: ImmuneFunction!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+enum ImmuneCycleRole {
+    CancerTestisAntigens
+    KillingCancerCells
+    TCellInfiltration
+    TCellPriming
+    TCellRecognition
+    TCellTrafficking
+}
+type EditableImmuneCycleRole   implements EditableObject{
+    id: ID!
+    field: String!
+    immuneCycleRole: ImmuneCycleRole!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+type ProteinExpressionMarker  implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+    synonyms: EditableSynonymList!
+    gene: OmniGene
+    assay: ProteinLevelAssay!
+    immunePhenotypes: [EditableImmunePhenotype]!
+    immuneFunctions: [EditableImmuneFunction]!
+    immuneCycleRoles: [EditableImmuneCycleRole]!
+    IHCAssay: IHCAssay! @relation(name: "IHC_ASSAY", direction:"IN")
+    RNASeqAssay: RNASeqAssay! @relation(name: "RNASEQ_ASSAY", direction:"IN")
+}
+
+type JaxVariant  {
+    id: ID!
+    name: String!
+    description: EditableStatement!
+    jaxId: String!
+    gene: JaxGene! @relation(name: "CODED_BY", direction: "OUT")
+    pDot: EditableStatement!
+    cDot: EditableStatement!
+    gDot: EditableStatement!
+    transcript: EditableStatement!
+    variantType: String!
+    proteinEffect: EditableProteinEffect!
+    goVariant: GOVariant  @relation(name: "GO_VARIANT", direction: "IN")
+    genomicVariant: GenomicVariant @relation(name: "G_J_VARIANT", direction: "IN")
+}
+
+type ClinVarVariant {
+    id: ID!
+    variantId: String!
+    gene: EditableStatement!
+    pDot: EditableStatement!
+    cDot: EditableStatement!
+    significance: EditableStatement!
+    signficanceExplanation:  EditableStatement!
+    genomicVariant: GenomicVariant @relation(name: "G_CV_VARIANT", direction: "IN")
+}
+
+type OncoTreeOccurrence {
+    id: ID!
+    disease: EditableStatement!
+    oncoTreeCode: String!
+    percentOccurrence: EditableStatement!
+    occurrences: EditableInt!
+    totalSamples: EditableInt!
+    perThousandOccurrence: EditableInt!
+}
+
+type HotSpotVariant {
+    id: ID!
+    name: String!
+    gene: String!
+    referenceAminoAcid: String!
+    variantAminoAcid: String!
+    begin: EditableStatement!
+    end: EditableStatement!
+    position: EditableInt!
+    occurrences: [OncoTreeOccurrence]!
+    genomicVariant: GenomicVariant @relation(name: "G_HS_VARIANT", direction: "IN")
+}
+
+type GOVariant {
+    id: ID!
+    name: EditableStatement!
+    gene: EditableStatement!
+    goId: String!
+    mutationType: EditableStatement!
+    jaxVariant: JaxVariant! @relation(name: "GO_VARIANT", direction: "OUT")
+    genomicVariant: GenomicVariant @relation(name: "G_GO_VARIANT", direction: "IN")
+}
+
+interface GenomicVariant {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    nonCanonicalTranscript: EditableStatement
+    jaxVariant: JaxVariant @relation(name: "G_J_VARIANT", direction: "OUT")
+    clinVarVariant: ClinVarVariant @relation(name: "G_CV_VARIANT", direction: "OUT")
+    hotSpotVariant: HotSpotVariant @relation(name: "G_HS_VARIANT", direction: "OUT")
+    goVariant: GOVariant @relation(name: "G_GO_VARIANT", direction: "OUT")
+    gene: OmniGene! @relation(name: "VARIANT_OF", direction: "OUT")
+}
+#    nonCanonicalTranscript: String is empty unless a non-canonical transcript defines this variant
+
+type VariantSNVIndel implements GenomicVariant {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    nonCanonicalTranscript: EditableStatement
+    jaxVariant: JaxVariant @relation(name: "G_J_VARIANT", direction: "OUT")
+    clinVarVariant: ClinVarVariant @relation(name: "G_CV_VARIANT", direction: "OUT")
+    hotSpotVariant: HotSpotVariant @relation(name: "G_HS_VARIANT", direction: "OUT")
+    goVariant: GOVariant @relation(name: "G_GO_VARIANT", direction: "OUT")
+    gene: OmniGene! @relation(name: "VARIANT_OF", direction: "OUT")
+    variantType: VariantType!
+    indelType: IndelType!
+    pDot: EditableStatement!
+    cDot: EditableStatement!
+    gDot: EditableStatement!
+    exon: EditableStatement!
+    proteinEffect: EditableProteinEffect!
+}
+
+# a region would be general variant terms where a specific cDot/pDot/gDot would not apply
+# examples would be BRAF codon 600 mutation, EGFR exon 19 deletion, BRCA1 mutation
+# null values for fields below would be considered "wild-cards"
+# If we need a protein domain region, we would probably create a separate node
+# May need to consider how to define concept of "Activating mutation"
+type VariantRegion implements GenomicVariant {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    nonCanonicalTranscript: EditableStatement
+    jaxVariant: JaxVariant @relation(name: "G_J_VARIANT", direction: "OUT")
+    clinVarVariant: ClinVarVariant @relation(name: "G_CV_VARIANT", direction: "OUT")
+    hotSpotVariant: HotSpotVariant @relation(name: "G_HS_VARIANT", direction: "OUT")
+    goVariant: GOVariant @relation(name: "G_GO_VARIANT", direction: "OUT")
+    gene: OmniGene! @relation(name: "VARIANT_OF", direction: "OUT")
+    regionType: RegionType!
+    regionValue: EditableInt!
+    variantType: VariantType
+    indelType: IndelType
+    isFrameshift: EditableBoolean
+    isDeleterious: EditableBoolean
+    isTruncating: EditableBoolean
+    # not sure we would need transcript info for this type of object
+    proteinEffect: EditableProteinEffect!
+}
+
+type VariantCNV implements GenomicVariant {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    nonCanonicalTranscript: EditableStatement
+    jaxVariant: JaxVariant @relation(name: "G_J_VARIANT", direction: "OUT")
+    clinVarVariant: ClinVarVariant @relation(name: "G_CV_VARIANT", direction: "OUT")
+    hotSpotVariant: HotSpotVariant @relation(name: "G_HS_VARIANT", direction: "OUT")
+    goVariant: GOVariant @relation(name: "G_GO_VARIANT", direction: "OUT")
+    gene: OmniGene! @relation(name: "VARIANT_OF", direction: "OUT")
+    copyChange: EditableCopyChange!
+}
+
+type VariantFusion implements GenomicVariant {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    nonCanonicalTranscript: EditableStatement
+    jaxVariant: JaxVariant @relation(name: "G_J_VARIANT", direction: "OUT")
+    clinVarVariant: ClinVarVariant @relation(name: "G_CV_VARIANT", direction: "OUT")
+    hotSpotVariant: HotSpotVariant @relation(name: "G_HS_VARIANT", direction: "OUT")
+    goVariant: GOVariant @relation(name: "G_GO_VARIANT", direction: "OUT")
+    # targetGene is for general fusion like NTRK fusion
+    gene: OmniGene! @relation(name: "VARIANT_OF", direction: "OUT")
+    #    targetGene: OmniGene @relation(name: "CODED_BY", direction: "OUT")
+    # 5prime/3prime are for specific fusions like FGFR3 - TACC3 fusion
+    gene5Prime: EditableOmniGeneReference!
+    exon5Prime: EditableInt!
+    gene3Prime: EditableOmniGeneReference!
+    exon3Prime: EditableInt!
+    copyChange: EditableCopyChange!
+}
+
+type GenomicVariantMarker implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    variant: GenomicVariant!
+    gene: OmniGene! @relation(name: "MARKER_OF", direction: "OUT")
+    method: EditableStatement!
+}
+
+type MarkerProfile implements MarkerComponent {
+    id: ID!
+    name: EditableStatement!
+    method: EditableStatement!
+    conjunction: OmniConjunction!
+    components: [MarkerComponent]!
+    evidenceAssociations: [EvidenceAssociation] @relation(name: "MARKER_FOR", direction: "OUT")
+    rnaSeqSignatureMarker: RNASeqSignatureMarker @relation(name:"IS_RNASEQ_SIGNATURE", direction: "OUT")
+}
+
+type JaxDrugClass  {
+    id: ID!
+    jaxId: String!
+    name: EditableStatement!
+    drugs: [JaxDrug]! @relation(name: "DRUG_CLASS_MEMBER", direction: "OUT")
+}
+
+type JaxDrug  {
+    id: ID!
+    jaxId: String!
+    name: EditableStatement!
+    tradeName: EditableStatement!
+    synonyms: EditableSynonymList!
+    description: EditableStatement!
+    drugClasses: [JaxDrugClass]! @relation(name: "DRUG_CLASS_MEMBER", direction: "IN")
+}
+
+type NCIDrug  {
+    id: ID!
+    conceptCode: EditableStatement!
+    name: EditableStatement!
+    definition: EditableStatement!
+    drugCategory: EditableStatement!
+    synonyms: EditableSynonymList!
+    annotationDate: EditableStatement!
+    isAntineoplastic: Boolean!
+    isImmuno: Boolean!
+    modulator: EditableStatement!
+}
+
+interface TherapyComponent {
+    id: ID!
+    name: EditableStatement!
+    componentOf: [Therapy]!
+}
+
+type DrugCategory  {
+    id: ID!
+    name: EditableStatement!
+    definition: EditableStatement!
+    jaxDrugClass: [JaxDrugClass]!
+    drugs: [OmniDrug]! @relation(name: "DRUG_CATEGORY_MEMBER", direction: "OUT")
+}
+
+type OmniDrug implements TherapyComponent {
+    id: ID!
+    name: EditableStatement!
+    tradeName: EditableStatement!
+    definition: EditableStatement!
+    drugCategories: [DrugCategory]! @relation(name: "DRUG_CATEGORY_MEMBER", direction: "IN")
+    synonyms: EditableSynonymList!
+    nciDrug: NCIDrug
+    jaxDrug: JaxDrug
+    componentOf: [Therapy]! @relation(name: "THERAPY_COMPONENT", direction: "IN")
+    target: [Target]!
+}
+
+
+type Therapy implements  TherapyComponent {
+    id: ID!
+    name: EditableStatement!
+    definition: EditableStatement!
+    conjunction: OmniConjunction!
+    components: [TherapyComponent]! @relation(name: "THERAPY_COMPONENT", direction: "OUT")
+    componentOf: [Therapy]! @relation(name: "THERAPY_COMPONENT", direction: "IN")
+}
+
+
+type TherapeuticIntervention  {
+    id: ID!
+    name: EditableStatement!
+    definition: EditableStatement!
+    therapy: Therapy!
+    precededBy: [TherapeuticIntervention]!
+    followedBy: [TherapeuticIntervention]!
+    concurrentWith: [TherapeuticIntervention]!
+    evidenceAssociations: [EvidenceAssociation] @relation(name: "THERAPY_FOR", direction: "OUT")
+}
+
+type XRef {
+    id: ID!
+    source: String!
+    sourceId: String!
+}
+
+type DODisease  {
+    id: ID!
+    doId: String!
+    name: EditableStatement!
+    definition: EditableStatement!
+    synonyms: EditableSynonymList!
+    xrefs: [XRef]!
+    subsets: [EditableStatement!]!
+    parents: [DODisease]! @relation(name: "PARENT", direction: "OUT")
+    children: [DODisease]! @relation(name: "PARENT", direction: "IN")
+}
+
+type JaxDisease  {
+    id: ID!
+    jaxId: String!
+    name: EditableStatement!
+    definition: EditableStatement!
+    doDisease: DODisease
+}
+
+type OncoTreeDisease  {
+    id: ID!
+    code: String!
+    name: EditableStatement!
+    mainType: EditableStatement!
+    tissue: EditableStatement!
+    xrefs: [XRef!]!
+    parent: OncoTreeDisease @relation(name: "PARENT", direction: "OUT")
+    children: [OncoTreeDisease]! @relation(name: "PARENT", direction: "IN")
+}
+
+type GODisease {
+    id: ID!
+    goId: String!
+    name: EditableStatement!
+    definition: EditableStatement!
+    synonyms: EditableSynonymList!
+    xrefs: [XRef!]!
+    jaxDiseases: [JaxDisease]!
+    parents: [GODisease] @relation(name: "PARENT", direction: "OUT")
+    children: [GODisease]! @relation(name: "PARENT", direction: "IN")
+}
+
+enum OmniDiseaseType {
+    Hematologic
+    Other
+    SolidTumor
+}
+
+type OmniDisease{
+    id: ID!
+    code: String!
+    fullDescription: EditableStatement!
+    omniDiseaseType: OmniDiseaseType!
+}
+
+type MCode {
+    id: ID!
+    code: String!
+    fullDescription: EditableStatement!
+    omniDisease: OmniDisease
+    parents: [MCode] @relation(name:"PARENT", direction:"OUT")
+    children: [MCode] @relation(name:"PARENT", direction:"IN")
+}
+
+type TCode {
+    id: ID!
+    code: String!
+    fullDescription: EditableStatement!
+    parents: [TCode] @relation(name:"PARENT", direction:"OUT")
+    children: [TCode] @relation(name:"PARENT", direction:"IN")
+}
+
+type EditableOntologicalDiseaseChildrenList implements EditableObject {
+    id: ID!
+    field: String!
+    children: [OntologicalDisease]! @relation(name: "PARENT", direction: "IN")
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+type EditableXRefList implements EditableObject {
+    id: ID!
+    field: String!
+    list: [XRef]!
+    editor: User! @relation(name: "EDITED_BY", direction: "OUT")
+    editDate: String!
+    references: [Reference]!  @relation(name: "REFERENCE_FOR", direction: "OUT")
+}
+
+
+type OntologicalDisease  {
+    id: ID!
+    name: EditableStatement!
+    description: EditableStatement!
+    synonyms: EditableSynonymList!
+    omniDiseases: [OmniDisease]!
+    mCodes: [MCode]!
+    doDiseases: [DODisease]!
+    goDiseases: [GODisease]!
+    jaxDiseases: [JaxDisease]!
+    oncoTreeDiseases: [OncoTreeDisease]!
+    xrefs: EditableXRefList!
+    parents: [OntologicalDisease]! @relation(name: "PARENT", direction: "OUT")
+    children: EditableOntologicalDiseaseChildrenList!
+    evidenceAssociations: [EvidenceAssociation] @relation(name: "DISEASE_FOR", direction: "OUT")
+}
+
+enum EvidenceType {
+    #Actionable
+    Concensus
+    Emerging
+}
+
+enum ResponseType {
+    Conflicting
+    Diagnostic
+    NoBenefit
+    Prognistic
+    Resistant
+    Sensitive
+    Unknown
+}
+
+type EvidenceAssociation  {
+    id: ID!
+    name: String!
+    evidences: [Evidence]! @relation(name: "HAS_EVIDENCE", direction:"OUT")
+    therapy: TherapeuticIntervention @relation(name: "HAS_THERAPY", direction:"OUT")
+    marker: MarkerProfile @relation(name: "HAS_MARKER", direction: "OUT")
+    disease: OntologicalDisease @relation(name: "HAS_DISEASE", direction: "OUT")
+}
+
+# do we need Evidence & Outcomes to implement NamedEntity?
+type Evidence {
+    id: ID!
+    evidenceAssociation: [EvidenceAssociation]! @relation(name: "HAS_ASSOCIATION", direction: "IN")
+    approvalStatus: String!
+    evidenceType: EvidenceType!
+    responseType: ResponseType!
+    ampCapAscoTier: String!
+    notes: String!
+    reference:LiteratureReference! @relation(name: "HAS_REFERENCE", direction: "OUT")
+    outcomes: [Outcome]! @relation(name: "HAS_OUTCOME", direction: "OUT")
+    adverseEvents: [AdverseEvent] @relation(name: "HAS_ADVERSE_EVENT", direction: "OUT")
+}
+
+enum EvidenceEndpoint {
+    CompleteResponse
+    DiseaseControlRate
+    ObjectiveResponse
+    OverallSurvival
+    PartialResponse
+    ProgressionFreeSurvival
+    ProgressionFreeSurvival6Month
+    ProgressionFreeSurvival12Month
+    ResponseRate
+}
+
+type Outcome {
+    id: ID!
+    # it is unlikely that an Outcome would be mapped to more than one evidence, but set as array just in case
+    evidences: [Evidence]! @relation(name:"")
+    endpoint: EvidenceEndpoint
+    observationMethod: String
+    observation: String
+    clinicalCharacteristics: [String]
+    treatmentGroup: String
+    groupSize: Int
+    dose: Int
+    doseUnit: String
+    outcome: Float!
+    outcomeUnit: String!
+    outcomeRangeMin: Float
+    outcomeRangeMax:Float
+    ConfidenceIntervalType: String
+    ConfidenceIntervalLo: Float
+    ConfidenceIntervalHi: Float
+    notes: String
+}
+
+type AdverseEvent  {
+    id: ID!
+    name: String!
+    grade: Int
+}

@@ -1,0 +1,2 @@
+user=python_user
+passwd=Omni2020
