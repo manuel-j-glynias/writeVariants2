@@ -217,13 +217,13 @@ def main():
     my_db = None
     my_cursor = None
     server_read: str = '165.227.89.140'
-    descriptions_csv_path = '../config/extract_table_descriptions.csv'
+    descriptions_csv_path = '../config/table_descriptions_02_01.csv'
     db_dict = get_schema(descriptions_csv_path)
     load_dir = get_load_dir() + 'extracted/'
 
-    # dict_of_conversion_functions, dict_of_data = create_data_and_conversion_dictionaries(server_read)
-    # delete_load_files(load_dir)
-    # write_load_files_using_func(db_dict, dict_of_data, dict_of_conversion_functions,load_dir)
+    dict_of_conversion_functions, dict_of_data = create_data_and_conversion_dictionaries(server_read)
+    delete_load_files(load_dir)
+    write_load_files_using_func(db_dict, dict_of_data, dict_of_conversion_functions,load_dir)
     try:
         my_db = get_local_db_connection()
         my_cursor = my_db.cursor(buffered=True)

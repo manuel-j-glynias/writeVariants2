@@ -155,8 +155,9 @@ def add_to_graphql_objects(my_cursor, mutations, method, db_dict, db_name, table
     for row in rows:
         adder_id = row[0]
         object_id = row[1]
-        s = table_name + '_' + str(counter) + ': ' + method + '(' + obj_arg + ': \\"' + object_id + '\\", ' + list_arg + ': [\\"' + adder_id + '\\"]), '
-        m += s
+        if adder_id != None:
+            s = table_name + '_' + str(counter) + ': ' + method + '(' + obj_arg + ': \\"' + object_id + '\\", ' + list_arg + ': [\\"' + adder_id + '\\"]), '
+            m += s
         counter += 1
         if (counter % 100 == 0):
             print(m)
@@ -292,18 +293,36 @@ def get_syn_dict(path):
     return syn_dict
 
 
-def write_graphql():
+def get_most_recent_graphql_schema():
+    return '../config/schema_03_01.graphql'
+
+def write_to_local():
+    return 'localhost'
+
+def write_to_prod():
+    return '165.227.89.140'
+
+def write_to_dev():
+    return '161.35.115.213'
+
+def write_graphql(should_erase):
     print(datetime.datetime.now().strftime("%H:%M:%S"))
 
-    schema_graphql = '../config/schema.graphql'
-    server_write: str = 'localhost'
+    schema_graphql = get_most_recent_graphql_schema()
+    # server_write: str = 'localhost'
+    # this is the prod server
+    # server_write: str = '165.227.89.140'
+    # this is the test server
     # server_write:str ='161.35.115.213'
+
+    server_write: str = write_to_prod()
 
     my_db = None
     my_cursor = None
-    erase_neo4j(schema_graphql, server_write)
+    if should_erase:
+        erase_neo4j(schema_graphql, server_write)
     mutations = get_mutations(server_write)
-    db_dict = get_schema('../config/variant_table_descriptions.csv')
+    db_dict = get_schema('../config/table_descriptions_03_01.csv')
 
     try:
         my_db = get_local_db_connection()
@@ -335,20 +354,13 @@ def write_graphql():
         add_to_graphql_objects(my_cursor, mutations, 'addUniprotEntryGene', db_dict, 'OmniSeqKnowledgebase2', 'UniprotEntry', server_write)
 
         create_graphql_objects(my_cursor, mutations, 'createOmniGene', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-        # add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneTranscript', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
+        add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneTranscript', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
         add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneGeneDescription', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
         add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneMyGeneInfoGene', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-        # add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneJaxGene', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-        # add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneUniprotEntry', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-        # add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneOncogenicCategory', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-        # add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneSynonyms', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
-
-
-
-
-
-
-
+        add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneJaxGene', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
+        add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneUniprotEntry', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
+        add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneOncogenicCategory', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
+        add_to_graphql_objects(my_cursor, mutations, 'addOmniGeneSynonyms', db_dict, 'OmniSeqKnowledgebase2', 'OmniGene', server_write)
 
 
     except mysql.connector.Error as error:
@@ -360,4 +372,4 @@ def write_graphql():
 
 
 if __name__ == "__main__":
-    write_graphql()
+    write_graphql(True)
