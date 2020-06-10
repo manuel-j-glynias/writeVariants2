@@ -3,7 +3,11 @@ import datetime
 import os
 import shutil
 import json
+from urllib.parse import urlparse
+
 import mysql.connector
+import xml.etree.ElementTree as ET
+import xlrd
 
 from src.graphql_utils import replace_characters, get_reference_from_pmid_by_metapub, fix_author_id, get_authors_names, ref_name_from_authors_pmid_and_year
 from src.sql_utils import get_local_db_connection, maybe_create_and_select_database, drop_table_if_exists, create_table, \
@@ -170,6 +174,18 @@ def get_jax_gene_dict(extract_dir)->dict:
                 jax_gene_dict[row[4]] = row[6]
     return jax_gene_dict
 
+def get_omnigene_dict(extract_dir)->dict:
+    omnigene_dict = {}
+    firstline = True
+    with open(extract_dir + 'OmniGene.csv') as csvfile:
+        omni_genes = csv.reader(csvfile)
+        for row in omni_genes:
+            if firstline:
+                firstline = False
+            else:
+                omnigene_dict[row[0]] = row[9]
+    return omnigene_dict
+
 
 def get_literature_reference_dict(extract_dir)->dict:
     literature_reference_dict = {}
@@ -246,13 +262,47 @@ def preflight_ref(pmid, load_files_dict, data_dict):
     return graph_id
 
 
+def handle_literature_reference_by_pmid(pmid, es_des_id, load_files_dict, data_dict):
+    es_lr_writer = load_files_dict['EditableStatement_LiteratureReference']['writer']
+    ref_id = preflight_ref(pmid, load_files_dict, data_dict)
+    if ref_id != None:
+        es_lr_writer.writerow([None, es_des_id, ref_id])
+
+
+def extract_domain_from_url(url):
+    if not url.startswith('http://'):
+        url = 'http://' + url
+    uri = urlparse(url)
+    domain_name = f"{uri.netloc}"
+    return domain_name
+
+
+def handle_internet_reference(web_address, es_id,load_files_dict):
+    ir_writer = load_files_dict['InternetReference']['writer']
+    es_ir_writer = load_files_dict['EditableStatement_InternetReference']['writer']
+    accessedDate = datetime.datetime.now().strftime("%m/%d/%Y")
+    shortReference = extract_domain_from_url(web_address) + ' (accessed on:' + accessedDate + ')'
+    now = datetime.datetime.now()
+    graph_id = 'ref_'  + now.strftime("%Y%m%d%H%M%S%f")
+    ir_writer.writerow([accessedDate,web_address,shortReference,graph_id])
+    es_ir_writer.writerow([None,es_id,graph_id])
+
+
 def write_editable_statement(field, editable_statement_writer, loader_id, statement):
     now = datetime.datetime.now()
     es_des_id: str = 'es_' + now.strftime("%Y%m%d%H%M%S%f")
-    editable_statement_writer.writerow([field, statement, now.strftime("%Y-%m-%d-%H-%M-%S-%f"), loader_id, es_des_id])
+    editable_statement_writer.writerow([field, str(statement), now.strftime("%Y-%m-%d-%H-%M-%S-%f"), loader_id, es_des_id])
     return es_des_id
 
 
+def write_editable_int(field, editable_int_writer, loader_id, the_int):
+    now = datetime.datetime.now()
+    ei_id: str = 'ei_' + now.strftime("%Y%m%d%H%M%S%f")
+    editable_int_writer.writerow([field, int(the_int), now.strftime("%Y-%m-%d-%H-%M-%S-%f"), loader_id, ei_id])
+    return ei_id
+
+
+#  JaxVariant stuff
 def read_one_variant_json(path:str)->dict:
     with open(path, 'r') as afile:
         variant_data = json.loads(afile.read())
@@ -298,9 +348,9 @@ def read_one_variant_json(path:str)->dict:
 
 def jaxvariant_loader(load_files_dict,data_dict):
     editable_statement_writer = load_files_dict['EditableStatement']['writer']
+    es_lr_writer = load_files_dict['EditableStatement_LiteratureReference']['writer']
     editable_protein_effect_writer = load_files_dict['EditableProteinEffect']['writer']
     jaxvariant_writer = load_files_dict['JaxVariant']['writer']
-    es_lr_writer = load_files_dict['EditableStatement_LiteratureReference']['writer']
 
     json_files = get_list_of_files('../data/variants')
     print("num variants=",len(json_files))
@@ -314,6 +364,9 @@ def jaxvariant_loader(load_files_dict,data_dict):
         counter += 1
         if (counter % 100 == 0):
             print(counter)
+        # if (counter % 1000 == 0):
+        #     break
+
         if variant is not None:
             # print(variant)
             gene_id = variant['gene_id']
@@ -347,46 +400,447 @@ def jaxvariant_loader(load_files_dict,data_dict):
                 for ref in variant['references']:
                     pmid = ref['pubMedId']
                     if pmid != None:
-                        ref_id = preflight_ref(pmid, load_files_dict, data_dict)
-                        if ref_id!=None:
-                            es_lr_writer.writerow([None, es_des_id, ref_id])
+                        handle_literature_reference_by_pmid(pmid, es_des_id, load_files_dict, data_dict)
 
+
+
+
+# ClinVar stuff
+
+def get_cDot(variantName):
+    if (len(variantName) > 0 and ':' in variantName):
+        vn = variantName.split(':')[1]
+        if (' ' in vn):
+            variantName = vn.split()[0]
+        else:
+            variantName = vn
+    return variantName
+
+
+def getSignificanceTuple(sigDict):
+    maxVal = 0
+    maxName = ''
+    explain = ''
+    for significance in sigDict:
+        if (len(explain) > 0):
+            explain += "/"
+        explain += significance + "(" + str(sigDict[significance]) + ")"
+        if (sigDict[significance] > maxVal):
+            maxVal = sigDict[significance]
+            maxName = significance
+    return maxName, explain
+
+def convert_cdot_to_position(cdot):
+    pos = None
+    pos_string = ''
+    for ch in cdot[2:]:
+        if ch.isdigit():
+            pos_string = pos_string + ch
+        else:
+            break
+    if len(pos_string) > 0:
+        pos = int(pos_string)
+    return pos
+
+
+def getOneVariant(variationArchive):
+    clinvar = {
+        'variantID': '',
+        'gene': '',
+        'cDot': '',
+        'pDot': '',
+        'cdot_pos': 0,
+        'pdot_pos': 0,
+        'significance': '',
+        'signficanceExplanation': '',
+    }
+    variantName = ''
+    sigs = {}
+    for simpleAllele in variationArchive.iter('SimpleAllele'):
+        if 'VariationID' in simpleAllele.attrib:
+            clinvar['variantID'] = simpleAllele.attrib['VariationID']
+
+    for gene in variationArchive.iter('Gene'):
+        clinvar['gene'] = gene.attrib['Symbol']
+    for name in variationArchive.iter('Name'):
+        if (len(variantName) == 0):
+            variantName = name.text
+    for proteinChange in variationArchive.iter('ProteinChange'):
+        if len(clinvar['pDot'])==0:
+            clinvar['pDot'] = proteinChange.text
+    for clinicalAssertion in variationArchive.iter('ClinicalAssertion'):
+        for child in clinicalAssertion:
+            if (child.tag == 'Interpretation'):
+                for gc in child:
+                    if (gc.tag == 'Description'):
+                        significance = gc.text.lower()
+                        sigs[significance] = sigs.get(significance, 0) + 1
+    clinvar['cDot'] = get_cDot(variantName)
+    pos = convert_cdot_to_position(clinvar['cDot'])
+    if pos is not None:
+        clinvar['cdot_pos'] = pos
+        clinvar['pdot_pos'] = int((int(pos) + 2) / 3)
+
+    clinvar['significance'], clinvar['signficanceExplanation'] = getSignificanceTuple(sigs)
+
+    return clinvar
 
 def clinvarvariant_loader(load_files_dict,data_dict):
     print('clinvarvariant_loader')
-    print('data_dict:', data_dict)
-    data_dict['clinvarvariant_loader'] = 'clinvarvariant_loader'
+    editable_statement_writer = load_files_dict['EditableStatement']['writer']
+    clinvarvariant_writer = load_files_dict['ClinVarVariant']['writer']
+    loader_id = data_dict['loader_id']
+    counter = 0
+    id_dict = {}
+    clinvar_variant_dict = {}
+    data_dict['clinvar_variant_dict'] = clinvar_variant_dict
+    for event, elem in ET.iterparse('../data/ClinVarVariationRelease_2020-05.xml'):
+        if event == 'end':
+            if elem.tag == 'VariationArchive':
+                clinvar = getOneVariant(elem)
+                id = str(clinvar['variantID'])
+                if id in id_dict:
+                    now = datetime.datetime.now()
+                    id = id +  now.strftime("%Y%m%d%H%M%S%f")
+                id_dict[id] = id
+                graphql = 'clinvar_variant_' + id
+                if clinvar['pDot'] != '':
+                    clinvar_variant_dict[clinvar['pDot']] = graphql
+
+                gene_field: str = 'clinvar_variant_gene_' + id
+                es_gene_id = write_editable_statement(gene_field, editable_statement_writer, loader_id, clinvar['gene'])
+
+                pdot_field: str = 'clinvar_variant_pdot_' + id
+                es_pdot_id = write_editable_statement(pdot_field, editable_statement_writer, loader_id, clinvar['pDot'])
+
+                cdot_field: str = 'clinvar_variant_cdot_' + id
+                es_cdot_id = write_editable_statement(cdot_field, editable_statement_writer, loader_id, clinvar['cDot'])
+
+                gdot_field: str = 'clinvar_variant_significance_' + id
+                es_significance_id = write_editable_statement(gdot_field, editable_statement_writer, loader_id, clinvar['significance'])
+
+                ct_field: str = 'clinvar_variant_signficanceExplanation_' + id
+                es_signficanceExplanation_id = write_editable_statement(ct_field, editable_statement_writer, loader_id, clinvar['signficanceExplanation'])
+
+                if not 'HAPLOTYPE' in clinvar['cDot'] and len(clinvar['cDot'])<100:
+                    clinvarvariant_writer.writerow([clinvar['variantID'],es_gene_id,es_pdot_id,es_cdot_id,es_significance_id,es_signficanceExplanation_id,graphql])
+                counter += 1
+                if (counter % 1000 == 0):
+                    print(counter)
+                # if (counter % 10000 == 0):
+                #     break
+                elem.clear()  # discard the element
+
+# Hot spot stuff
+def handle_occurrences(occurrences, onco_dict):
+    occurrences_list = []
+    occurrence_array = occurrences.split('|')
+    for item in occurrence_array:
+        vals = item.split(':')
+        disease = vals[0]
+        total = int(vals[1])
+        has_variant = int(vals[2])
+        ratio = 100.0 * (has_variant / total)
+        onco_tree_occurrence = {'percentOccurrence': '%.1f%%' % ratio,
+                                'perThousand': round(10.0 * ratio),
+                                'occurences': has_variant,
+                                'totalSamples': total}
+        if disease in onco_dict:
+            onco_tree_occurrence['disease'] = onco_dict[disease]['name']
+            onco_tree_occurrence['oncoTreeCode'] = onco_dict[disease]['code']
+        else:
+            onco_tree_occurrence['disease'] = disease
+            onco_tree_occurrence['oncoTreeCode'] = disease
+        occurrences_list.append(onco_tree_occurrence)
+    return occurrences_list
+
+def read_snv_hotspot(onco_dict):
+    hot_spots = []
+    with open('../data/hotspots_v2/SNV-hotspots-Table 1.tsv') as tsvfile:
+        reader = csv.DictReader(tsvfile, dialect='excel-tab')
+        for row in reader:
+            # print(row)
+            gene = row['Hugo_Symbol']
+            referenceAminoAcid = row['Reference_Amino_Acid'].split(':')[0]
+            variantAminoAcid = row['Variant_Amino_Acid'].split(':')[0]
+            begin = row['Amino_Acid_Position']
+            if not begin.isnumeric():
+                position = 0
+            else:
+                position = int(begin)
+            if referenceAminoAcid == 'splice':
+                name = gene + ' ' + begin
+            else:
+                name = gene +  ' ' + referenceAminoAcid + begin + variantAminoAcid
+
+            occurrences = handle_occurrences(row['Detailed_Cancer_Types'],onco_dict)
+            hot_spot = {'name':name, 'gene':gene,
+                        'referenceAminoAcid':referenceAminoAcid,
+                        'variantAminoAcid':variantAminoAcid,
+                        'begin':begin,
+                        'end':begin,
+                        'position':position,
+                        'occurrences':occurrences}
+            hot_spots.append(hot_spot)
+    return hot_spots
+
+def read_indel_hotspot(onco_dict):
+    hot_spots = []
+    with open('../data/hotspots_v2/INDEL-hotspots-Table 1.tsv') as tsvfile:
+        reader = csv.DictReader(tsvfile, dialect='excel-tab')
+        for row in reader:
+            # print(row)
+            gene = row['Hugo_Symbol']
+
+            variant = row['Variant_Amino_Acid'].split(':')[0]
+            name = gene + ' ' + variant
+            referenceAminoAcid = variant[:1]
+            variantAminoAcid = ''
+            if '_' in variant:
+                variantAminoAcid = variant.split('_')[1][:1]
+            if '-' in row['Amino_Acid_Position']:
+                pos = row['Amino_Acid_Position'].split('-')
+                begin = pos[0]
+                end = pos[1]
+            else:
+                begin = row['Amino_Acid_Position']
+                end = begin
+            position = int(begin)
+            if position < 0:
+                position = 0
+
+            occurrences = handle_occurrences(row['Detailed_Cancer_Types'],onco_dict)
+            hot_spot = {'name':name, 'gene':gene,
+                        'referenceAminoAcid':referenceAminoAcid,
+                        'variantAminoAcid':variantAminoAcid,
+                        'begin':begin,
+                        'end':end,
+                        'position':position,
+                        'occurrences':occurrences}
+            hot_spots.append(hot_spot)
+    return hot_spots
+
+def get_oncotree_dict():
+    onco_dict = {}
+    unknown = {'code':'unk', 'name':'Unknown'}
+    onco_dict['unk'] = unknown
+    f = open('../data/onctoree.json', "r")
+    data = json.loads(f.read())
+    f.close()
+    for item in data:
+        onco_dict[item['code'].lower()] = item
+        for h in item['history']:
+            onco_dict[h.lower()] = item
+        for p in item['precursors']:
+            onco_dict[p.lower()] = item
+    return onco_dict
+
 
 def hotspotvariant_loader(load_files_dict,data_dict):
     print('hotspotvariant_loader')
-    print('data_dict:', data_dict)
-    data_dict['hotspotvariant_loader'] = 'hotspotvariant_loader'
+    editable_statement_writer = load_files_dict['EditableStatement']['writer']
+    editable_int_writer = load_files_dict['EditableInt']['writer']
+    hotspotvariant_writer = load_files_dict['HotSpotVariant']['writer']
+    oncotreeoccurrence_writer = load_files_dict['OncoTreeOccurrence']['writer']
+    loader_id = data_dict['loader_id']
+
+    hotspot_variant_dict = {}
+    data_dict['hotspot_variant_dict'] = hotspot_variant_dict
+
+
+    onco_dict = get_oncotree_dict()
+    hot_spots = read_snv_hotspot(onco_dict)
+    hot_spots.extend(read_indel_hotspot(onco_dict))
+    for hot_spot in hot_spots:
+        id = hot_spot['name'].replace(' ', '_').replace('-', '_').replace('*', '')
+        graph_id = 'hot_spot_' + id
+        hotspot_variant_dict[hot_spot['name']] = graph_id
+        begin_field: str = 'hot_spot_begin_' + id
+        es_begin_id = write_editable_statement(begin_field, editable_statement_writer, loader_id, hot_spot['begin'])
+
+        end_field: str = 'hot_spot_end_' + id
+        es_end_id = write_editable_statement(end_field, editable_statement_writer, loader_id, hot_spot['end'])
+
+        position_field: str = 'hotspotvariant_position_' + id
+        ei_position_id: str = write_editable_int(position_field, editable_int_writer, loader_id, int(hot_spot['position']))
+
+        # hot_spot['name'],hot_spot['gene'],hot_spot['referenceAminoAcid'],hot_spot['variantAminoAcid'],
+        #                                                    hot_spot['begin'],hot_spot['end'],str(hot_spot['position']),graph_id
+
+        hotspotvariant_writer.writerow([hot_spot['name'],hot_spot['gene'],hot_spot['referenceAminoAcid'],hot_spot['variantAminoAcid'],
+                                        es_begin_id,es_end_id,ei_position_id,graph_id])
+        # hot_spot_occurrence['disease'],hot_spot_occurrence['oncoTreeCode'],hot_spot_occurrence['percentOccurrence'],
+        #                                                    str(hot_spot_occurrence['perThousand']),str(hot_spot_occurrence['occurences']),str(hot_spot_occurrence['totalSamples']),hot_spot_id
+        for occurrence in hot_spot['occurrences']:
+            occurrence_graph_id = 'oncotree_occurrence_' + graph_id + '_' + occurrence['oncoTreeCode']
+            disease_graph_id = 'oncotree_disease_' + occurrence['oncoTreeCode']
+            percentOccurrence_field: str = 'percentOccurrence_' + disease_graph_id
+            es_percentOccurrence_id = write_editable_statement(percentOccurrence_field, editable_statement_writer, loader_id, occurrence['percentOccurrence'])
+            occurrences_field: str = 'occurrences_' + disease_graph_id
+            ei_occurrences_id: str = write_editable_int(occurrences_field, editable_int_writer, loader_id, int(occurrence['occurences']))
+            totalSamples_field: str = 'totalSamples_' + disease_graph_id
+            ei_totalSamples_id: str = write_editable_int(totalSamples_field, editable_int_writer, loader_id, int(occurrence['totalSamples']))
+
+            oncotreeoccurrence_writer.writerow([disease_graph_id,occurrence['oncoTreeCode'],es_percentOccurrence_id,ei_occurrences_id,ei_totalSamples_id,
+                                                str(occurrence['perThousand']),graph_id,occurrence_graph_id])
+
+#  go variant stuff
+def read_one_go_json(path:str)->dict:
+    with open(path, 'r') as afile:
+        go_data = json.loads(afile.read())
+        results = go_data['results']
+        return results
 
 def govariant_loader(load_files_dict,data_dict):
     print('govariant_loader')
-    print('data_dict:', data_dict)
+    json_files = get_list_of_files('../data/GO_alterations')
+    print("num files=", len(json_files))
+    loader_id = data_dict['loader_id']
+    editable_statement_writer = load_files_dict['EditableStatement']['writer']
+    govariant_writer = load_files_dict['GOVariant']['writer']
+    jax_dict = data_dict['jax_variant_dict']
+    go_variant_dict = {}
+    data_dict['go_variant_dict'] = go_variant_dict
+
+    counter = 0
+    go_dict = {}
+    for json_file in json_files:
+        print(json_file)
+        alteration_array = read_one_go_json(json_file)
+        for alteration in alteration_array:
+            if 'gene' in alteration:
+                go_id = alteration['id']
+                if not go_id in go_dict:
+                    if 'mutation_type' in alteration:
+                        mutation_type = alteration['mutation_type']
+                    else:
+                        mutation_type = ''
+                    graph_id = 'go_variant_' + go_id
+                    variant_name = alteration['name']
+                    go_variant_dict[variant_name] = graph_id
+                    gene_name = alteration['gene']
+                    jax_variant_id = None
+                    if 'codes' in alteration:
+                        for code in alteration['codes']:
+                            if code.startswith('JAX'):
+                                jax_id = code[12:]
+                                if jax_id in jax_dict:
+                                    jax_variant_id = jax_dict[jax_id]
+                                # variant_name,gene_name,go_id,mutationType,jax_variant_id,graph_id
+                                break
+                    name_field: str = 'go_variant_name_' + go_id
+                    es_name_id = write_editable_statement(name_field, editable_statement_writer, loader_id, variant_name)
+                    gene_field: str = 'go_variant_gene_' + go_id
+                    es_gene_id = write_editable_statement(gene_field, editable_statement_writer, loader_id, gene_name)
+                    mutationType_field: str = 'go_variant_mutationType_' + go_id
+                    es_mutationType_id = write_editable_statement(mutationType_field, editable_statement_writer, loader_id, mutation_type)
+
+                    govariant_writer.writerow([es_name_id,es_gene_id,go_id,es_mutationType_id,jax_variant_id,graph_id])
+                    go_dict[go_id] = graph_id
+                    counter += 1
+                    if (counter % 100 == 0):
+                        print(counter)
+
+
+def create_variants_data_dicts(data_dict):
+    protein_effect_dict = {
+        'gain of function': 'GainOfFunction', 'gain of function - predicted': 'GainOfFunctionPredicted',
+        'loss of function': 'LossOfFunction', 'loss of function - predicted': 'LossOfFunctionPredicted',
+        'no effect': 'NoEffect', 'unknown': 'Unknown'}
+    data_dict['protein_effect_dict'] = protein_effect_dict
+    variants_data_dict = {}
+    data_dict['variants_data_dict'] = variants_data_dict
+    wb = xlrd.open_workbook(filename='data/OCP_Lev1_2_Variants_w_exon.xlsx')
+    sheet = wb.sheet_by_index(0)
+    for row_idx in range(1, sheet.nrows):
+        geneName = sheet.cell_value(row_idx, 0)
+        variantName = sheet.cell_value(row_idx, 1)
+        copyChange = sheet.cell_value(row_idx, 3)
+        fusionDesc = sheet.cell_value(row_idx, 4)
+        regionType = sheet.cell_value(row_idx, 9)
+        regionNumber = sheet.cell_value(row_idx, 12)
+        if isinstance(regionNumber,float):
+            regionNumber = str(int(regionNumber))
+        regionAAChange = sheet.cell_value(row_idx, 13)
+        regionIndelType= sheet.cell_value(row_idx, 14)
+        exon = sheet.cell_value(row_idx, 18)
+        exon_number = 0;
+        if isinstance(exon,float):
+            exon_number = int(exon)
+            exon = str(int(exon))
+        pdot = ''
+        exon3 = ''
+        exon5 = ''
+        if fusionDesc != '':
+            variantType = 'Fusion'
+            if exon != '':
+                pdot = 'Exon ' + exon + ' Deletion'
+                exon5 = str(exon_number - 1)
+                exon3 = str(exon_number + 1)
+            elif 'rearrange' in variantName:
+                pdot = 'rearrangement'
+            else:
+                pdot = 'fusion'
+        elif copyChange != '':
+            variantType = 'CNV'
+            pdot = copyChange
+        elif regionIndelType != '':
+            if regionAAChange=='':
+                variantType = 'Region'
+                pdot = regionType + ' ' + regionNumber + ' ' + regionIndelType
+            else:
+                variantType = 'Indel'
+                pdot = regionAAChange
+        else:
+            if regionAAChange=='':
+                variantType = 'Region'
+                if regionType == 'Gene':
+                    pdot = ' mutation'
+                else:
+                    pdot = regionType + ' ' + regionNumber + ' mutation'
+            else:
+                variantType = 'SNV'
+                pdot = regionAAChange
+        gene_plus_pdot = geneName + ' ' + pdot
+        variant = {'geneName':geneName,'variantName':variantName,'variantType':variantType, 'copyChange':copyChange, 'fusionDesc':fusionDesc,
+                   'regionType':regionType, 'regionNumber':regionNumber,'pdot':pdot,'exon5':exon5,'exon3':exon3, 'gene_plus_pdot':gene_plus_pdot }
+        variants_data_dict[gene_plus_pdot] = variant
+
+
 
 def variantsnvindel_loader(load_files_dict,data_dict):
     print('variantsnvindel_loader')
-    print('data_dict:', data_dict)
+    if not 'variants_data_dict' in data_dict:
+        create_variants_data_dicts(data_dict)
+    variants_data_dict = data_dict['variants_data_dict']
 
 def variantregion_loader(load_files_dict,data_dict):
     print('variantregion_loader')
-    print('data_dict:', data_dict)
+    if not 'variants_data_dict' in data_dict:
+        create_variants_data_dicts(data_dict)
+    variants_data_dict = data_dict['variants_data_dict']
 
 def variantcnv_loader(load_files_dict,data_dict):
     print('variantcnv_loader')
-    print('data_dict:',data_dict)
+    if not 'variants_data_dict' in data_dict:
+        create_variants_data_dicts(data_dict)
+    variants_data_dict = data_dict['variants_data_dict']
 
 def variantfusion_loader(load_files_dict,data_dict):
     print('variantfusion_loader')
-    print('data_dict:', data_dict)
+    if not 'variants_data_dict' in data_dict:
+        create_variants_data_dicts(data_dict)
+    variants_data_dict = data_dict['variants_data_dict']
 
 def genomicvariantmarker_loader(load_files_dict,data_dict):
     print('genomicvariantmarker_loader')
-    print('data_dict:', data_dict)
+    if not 'variants_data_dict' in data_dict:
+        create_variants_data_dicts(data_dict)
+    variants_data_dict = data_dict['variants_data_dict']
+
 
 def migrate_and_extend(should_migrate,should_generate_sql):
+    print(datetime.datetime.now().strftime("%H:%M:%S"))
     files_to_copy = ['Author','EditableStatement','EditableStatement_InternetReference',"EditableStatement_LiteratureReference",
                      'InternetReference','Journal','LiteratureReference','LiteratureReference_Author','MyGeneInfoGene',
                      'UniprotEntry','User']
@@ -434,11 +888,12 @@ def migrate_and_extend(should_migrate,should_generate_sql):
     if should_migrate:
         jax_transcript_dict = migrate_jax_gene(load_files_dict, extract_dir, user_id)
         migrate_omnigene(load_files_dict, extract_dir, user_id,jax_transcript_dict)
-    else:
-        data_dict['jax_gene_dict'] = get_jax_gene_dict(extract_dir)
-        data_dict['ref_by_pmid'] = get_literature_reference_dict(extract_dir)
-        data_dict['journal_dict'] = get_journal_dict(extract_dir)
-        data_dict['author_dict'] = get_author_dict(extract_dir)
+
+    data_dict['jax_gene_dict'] = get_jax_gene_dict(extract_dir)
+    data_dict['ref_by_pmid'] = get_literature_reference_dict(extract_dir)
+    data_dict['journal_dict'] = get_journal_dict(extract_dir)
+    data_dict['author_dict'] = get_author_dict(extract_dir)
+    data_dict['omnigene_dict'] = get_omnigene_dict(extract_dir)
 
     variant_files = ['JaxVariant','ClinVarVariant','HotSpotVariant','GOVariant',
                        'VariantSNVIndel','VariantRegion','VariantCNV','VariantFusion','GenomicVariantMarker']
@@ -470,6 +925,7 @@ def migrate_and_extend(should_migrate,should_generate_sql):
         finally:
             if (my_db.is_connected()):
                 my_cursor.close()
+    print(datetime.datetime.now().strftime("%H:%M:%S"))
 
 
 if __name__ == "__main__":
