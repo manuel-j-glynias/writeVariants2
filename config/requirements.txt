@@ -12,7 +12,7 @@ habanero==0.7.2
 humanfriendly==8.2
 idna==2.9
 importlib-metadata==1.6.0
-lxml==4.5.0
+lxml==4.6.2
 metapub==0.5.5
 more-itertools==8.2.0
 mysql-connector-python==8.0.20
