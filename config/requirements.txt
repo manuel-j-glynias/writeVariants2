@@ -22,7 +22,7 @@ neotime==1.7.4
 packaging==20.3
 pluggy==0.13.1
 protobuf==3.11.3
-py==1.8.1
+py==1.10.0
 PyMySQL==0.9.3
 pyparsing==2.4.7
 pytest==5.4.2
